@@ -1,0 +1,12 @@
+{
+    "name": "wyrihaximus/react-http-middleware-webroot-preload",
+    "require": {
+        "psr/http-message": "^1.0",
+        "ringcentral/psr7": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "WyriHaximus\\React\\Http\\Middleware\\": "src/"
+        }
+    }
+}
