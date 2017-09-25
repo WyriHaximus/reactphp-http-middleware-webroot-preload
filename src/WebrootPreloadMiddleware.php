@@ -2,8 +2,10 @@
 
 namespace WyriHaximus\React\Http\Middleware;
 
+use Defr\PhpMimeType\MimeType;
 use Psr\Http\Message\ServerRequestInterface;
 use RingCentral\Psr7\Response;
+use function RingCentral\Psr7\stream_for;
 
 final class WebrootPreloadMiddleware
 {
@@ -23,7 +25,10 @@ final class WebrootPreloadMiddleware
 
             $filePath = str_replace($webroot, DIRECTORY_SEPARATOR, $fileinfo->getPathname());
 
-            $this->files[$filePath] = file_get_contents($fileinfo->getPathname());
+            $this->files[$filePath] = [
+                'contents' => file_get_contents($fileinfo->getPathname()),
+                'mime' => MimeType::get($fileinfo->getPathname()),
+            ];
         }
     }
 
@@ -31,7 +36,7 @@ final class WebrootPreloadMiddleware
     {
         $path = $request->getUri()->getPath();
         if (isset($this->files[$path])) {
-            return new Response(200, [], $this->files[$path]);
+            return (new Response(200))->withHeader('Content-Type', $this->files[$path]['mime'])->withBody(stream_for($this->files[$path]['contents']));
         }
 
         return $next($request);
