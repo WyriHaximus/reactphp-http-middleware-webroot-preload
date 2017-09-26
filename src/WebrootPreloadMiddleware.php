@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace WyriHaximus\React\Http\Middleware;
 
@@ -6,8 +6,8 @@ use Defr\PhpMimeType\MimeType;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use RingCentral\Psr7\Response;
-use function RingCentral\Psr7\stream_for;
 use ScriptFUSION\Byte\ByteFormatter;
+use function RingCentral\Psr7\stream_for;
 
 final class WebrootPreloadMiddleware
 {
@@ -27,10 +27,19 @@ final class WebrootPreloadMiddleware
                 continue;
             }
 
-            $filePath = str_replace([
-                $webroot,
-                DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR
-            ], DIRECTORY_SEPARATOR, $fileinfo->getPathname());
+            $filePath = str_replace(
+                [
+                    $webroot,
+                    DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR,
+                    DIRECTORY_SEPARATOR,
+                ],
+                [
+                    DIRECTORY_SEPARATOR,
+                    DIRECTORY_SEPARATOR,
+                    '/',
+                ],
+                $fileinfo->getPathname()
+            );
 
             $this->files[$filePath] = [
                 'contents' => file_get_contents($fileinfo->getPathname()),
@@ -40,7 +49,6 @@ final class WebrootPreloadMiddleware
             if (strpos($mime, '/') !== false) {
                 $this->files[$filePath]['mime'] = $mime;
             }
-
 
             if ($logger instanceof LoggerInterface) {
                 $fileSize = strlen($this->files[$filePath]['contents']);

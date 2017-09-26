@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace WyriHaximus\React\Tests\Http\Middleware;
 
@@ -16,10 +16,10 @@ final class WebrootPreloadMiddlewareTest extends TestCase
     {
         $byteFormatter = (new ByteFormatter())->setPrecision(2)->setFormat('%v%u');
         $webroot = __DIR__;
-        $logger = new class extends AbstractLogger {
+        $logger = new class() extends AbstractLogger {
             private $messages = [];
 
-            public function log($level, $message, array $context = array())
+            public function log($level, $message, array $context = [])
             {
                 $this->messages[] = [
                     'level' => $level,
