@@ -4,6 +4,7 @@ namespace WyriHaximus\React\Http\Middleware;
 
 use Defr\PhpMimeType\MimeType;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use RingCentral\Psr7\Response;
 use function RingCentral\Psr7\stream_for;
 
@@ -14,8 +15,9 @@ final class WebrootPreloadMiddleware
      */
     private $files = [];
 
-    public function __construct(string $webroot)
+    public function __construct(string $webroot, LoggerInterface $logger = null)
     {
+        $totalSize = 0;
         $directory = new \RecursiveDirectoryIterator($webroot);
         $directory = new \RecursiveIteratorIterator($directory);
         foreach ($directory as $fileinfo) {
@@ -26,13 +28,23 @@ final class WebrootPreloadMiddleware
             $filePath = str_replace($webroot, DIRECTORY_SEPARATOR, $fileinfo->getPathname());
 
             $this->files[$filePath] = [
-            'contents' => file_get_contents($fileinfo->getPathname()),
+                'contents' => file_get_contents($fileinfo->getPathname()),
             ];
 
             $mime = MimeType::get($fileinfo->getPathname());
             if (strpos($mime, '/') !== false) {
                 $this->files[$filePath]['mime'] = $mime;
             }
+
+
+            if ($logger instanceof LoggerInterface) {
+                $logger->debug($filePath . ': ' . strlen($this->files[$filePath]['contents']) . ' bytes');
+                $totalSize += strlen($this->files[$filePath]['contents']);
+            }
+        }
+
+        if ($logger instanceof LoggerInterface) {
+            $logger->info('Preloaded ' . count($this->files) . ' file(s) with a combined size of ' . $totalSize . ' bytes from ' . $webroot . ' into memory');
         }
     }
 

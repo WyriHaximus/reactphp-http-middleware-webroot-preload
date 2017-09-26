@@ -4,7 +4,8 @@
         "php": "^7.0",
         "psr/http-message": "^1.0",
         "ringcentral/psr7": "^1.2",
-        "dfridrich/php-mime-type": "^2.0"
+        "dfridrich/php-mime-type": "^2.0",
+        "psr/log": "^1.0"
     },
     "autoload": {
         "psr-4": {
