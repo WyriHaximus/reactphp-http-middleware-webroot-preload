@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use RingCentral\Psr7\Response;
 use function RingCentral\Psr7\stream_for;
+use ScriptFUSION\Byte\ByteFormatter;
 
 final class WebrootPreloadMiddleware
 {
@@ -18,6 +19,7 @@ final class WebrootPreloadMiddleware
     public function __construct(string $webroot, LoggerInterface $logger = null)
     {
         $totalSize = 0;
+        $byteFormatter = (new ByteFormatter())->setPrecision(2)->setFormat('%v%u');
         $directory = new \RecursiveDirectoryIterator($webroot);
         $directory = new \RecursiveIteratorIterator($directory);
         foreach ($directory as $fileinfo) {
@@ -25,7 +27,10 @@ final class WebrootPreloadMiddleware
                 continue;
             }
 
-            $filePath = str_replace($webroot, DIRECTORY_SEPARATOR, $fileinfo->getPathname());
+            $filePath = str_replace([
+                $webroot,
+                DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR
+            ], DIRECTORY_SEPARATOR, $fileinfo->getPathname());
 
             $this->files[$filePath] = [
                 'contents' => file_get_contents($fileinfo->getPathname()),
@@ -38,13 +43,14 @@ final class WebrootPreloadMiddleware
 
 
             if ($logger instanceof LoggerInterface) {
-                $logger->debug($filePath . ': ' . strlen($this->files[$filePath]['contents']) . ' bytes');
-                $totalSize += strlen($this->files[$filePath]['contents']);
+                $fileSize = strlen($this->files[$filePath]['contents']);
+                $totalSize += $fileSize;
+                $logger->debug($filePath . ': ' . $byteFormatter->format($fileSize));
             }
         }
 
         if ($logger instanceof LoggerInterface) {
-            $logger->info('Preloaded ' . count($this->files) . ' file(s) with a combined size of ' . $totalSize . ' bytes from ' . $webroot . ' into memory');
+            $logger->info('Preloaded ' . count($this->files) . ' file(s) with a combined size of ' . $byteFormatter->format($totalSize) . ' from "' . $webroot . '" into memory');
         }
     }
 
