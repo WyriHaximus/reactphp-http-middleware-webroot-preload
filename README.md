@@ -12,7 +12,7 @@
 To install via [Composer](http://getcomposer.org/), use the command below, it will automatically detect the latest version and bind it with `^`.
 
 ```
-composer require WyriHaximus/react-http-middleware-webroot-preload
+composer require wyrihaximus/react-http-middleware-webroot-preload
 ```
 
 # Usage
