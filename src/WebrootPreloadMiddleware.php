@@ -2,7 +2,6 @@
 
 namespace WyriHaximus\React\Http\Middleware;
 
-use Defr\PhpMimeType\MimeType;
 use Pekkis\MimeTypes\MimeTypes;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
