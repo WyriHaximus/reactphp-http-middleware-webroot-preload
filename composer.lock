@@ -4,37 +4,37 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "46e4640274e1aa0aca2dae748a907a35",
+    "content-hash": "0d4f1a7b037056dcb4116ede44c1aa75",
     "packages": [
         {
-            "name": "dfridrich/php-mime-type",
-            "version": "v2.0.1",
+            "name": "dflydev/apache-mime-types",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dfridrich/PhpMimeType.git",
-                "reference": "07ce624711c67d61183b42c22ccf0553b06eb4ad"
+                "url": "https://github.com/dflydev/dflydev-apache-mime-types.git",
+                "reference": "f30a57e59b7476e4c5270b6a0727d79c9c0eb861"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dfridrich/PhpMimeType/zipball/07ce624711c67d61183b42c22ccf0553b06eb4ad",
-                "reference": "07ce624711c67d61183b42c22ccf0553b06eb4ad",
+                "url": "https://api.github.com/repos/dflydev/dflydev-apache-mime-types/zipball/f30a57e59b7476e4c5270b6a0727d79c9c0eb861",
+                "reference": "f30a57e59b7476e4c5270b6a0727d79c9c0eb861",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6|^7.0"
+                "php": ">=5.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8|^5.0",
-                "symfony/http-foundation": "^2.8 || ^3.0"
-            },
-            "suggest": {
-                "symfony/http-foundation": "Allows you to get prepared Symfony response."
+                "twig/twig": "1.*"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
             "autoload": {
-                "psr-4": {
-                    "Defr\\PhpMimeType\\": "src/",
-                    "Defr\\": "legacy/"
+                "psr-0": {
+                    "Dflydev\\ApacheMimeTypes": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -43,17 +43,71 @@
             ],
             "authors": [
                 {
-                    "name": "Dennis Fridrich",
-                    "email": "fridrich.dennis@gmail.com"
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
                 }
             ],
-            "description": "Simple PHP class for guessing file mime type based on file extension with ability to use in Symfony project.",
-            "homepage": "https://github.com/dfridrich/PhpMimeType",
+            "description": "Apache MIME Types",
             "keywords": [
-                "mimetype",
-                "php"
+                "apache",
+                "mime",
+                "mimetypes"
             ],
-            "time": "2017-05-31T15:04:20+00:00"
+            "time": "2013-05-14T02:02:01+00:00"
+        },
+        {
+            "name": "pekkis/mime-types",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pekkis/mime-types.git",
+                "reference": "e0760d80c6a2e9f9e60ff3e0b247ed4f73866bba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pekkis/mime-types/zipball/e0760d80c6a2e9f9e60ff3e0b247ed4f73866bba",
+                "reference": "e0760d80c6a2e9f9e60ff3e0b247ed4f73866bba",
+                "shasum": ""
+            },
+            "require": {
+                "dflydev/apache-mime-types": "~1.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "symfony/http-foundation": "~2.2"
+            },
+            "suggest": {
+                "symfony/http-foundation": "For symfony mime type resolver support"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Pekkis\\MimeTypes": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Mikko Forsström",
+                    "email": "puhemies@diktaattoriporssi.com"
+                }
+            ],
+            "description": "Mime type library",
+            "keywords": [
+                "mime",
+                "mime type"
+            ],
+            "time": "2015-07-27T20:03:55+00:00"
         },
         {
             "name": "psr/http-message",
