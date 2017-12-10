@@ -4,38 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a4d4741d8bcb55d28331f4b7e77db8f6",
+    "content-hash": "cc8eb6165a5e84204479395e75a41856",
     "packages": [
         {
-            "name": "dfridrich/php-mime-type",
-            "version": "v2.0.1",
+            "name": "cedricziel/stupidmime",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dfridrich/PhpMimeType.git",
-                "reference": "07ce624711c67d61183b42c22ccf0553b06eb4ad"
+                "url": "https://github.com/cedricziel/stupidmime.git",
+                "reference": "09e36cac34dc180b23f738a6d382cd6231c1c903"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dfridrich/PhpMimeType/zipball/07ce624711c67d61183b42c22ccf0553b06eb4ad",
-                "reference": "07ce624711c67d61183b42c22ccf0553b06eb4ad",
+                "url": "https://api.github.com/repos/cedricziel/stupidmime/zipball/09e36cac34dc180b23f738a6d382cd6231c1c903",
+                "reference": "09e36cac34dc180b23f738a6d382cd6231c1c903",
                 "shasum": ""
-            },
-            "require": {
-                "php": "^5.6|^7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8|^5.0",
-                "symfony/http-foundation": "^2.8 || ^3.0"
-            },
-            "suggest": {
-                "symfony/http-foundation": "Allows you to get prepared Symfony response."
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Defr\\PhpMimeType\\": "src/",
-                    "Defr\\": "legacy/"
-                }
+                "files": [
+                    "src/mime_type_lib.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -43,17 +32,12 @@
             ],
             "authors": [
                 {
-                    "name": "Dennis Fridrich",
-                    "email": "fridrich.dennis@gmail.com"
+                    "name": "Cedric Ziel",
+                    "email": "cedric@cedric-ziel.com"
                 }
             ],
-            "description": "Simple PHP class for guessing file mime type based on file extension with ability to use in Symfony project.",
-            "homepage": "https://github.com/dfridrich/PhpMimeType",
-            "keywords": [
-                "mimetype",
-                "php"
-            ],
-            "time": "2017-05-31T15:04:20+00:00"
+            "description": "Stupid mime detection.",
+            "time": "2015-12-10T10:28:26+00:00"
         },
         {
             "name": "psr/http-message",

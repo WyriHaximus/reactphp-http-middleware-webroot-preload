@@ -2,7 +2,6 @@
 
 namespace WyriHaximus\React\Http\Middleware;
 
-use Pekkis\MimeTypes\MimeTypes;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use RingCentral\Psr7\Response;
@@ -18,7 +17,6 @@ final class WebrootPreloadMiddleware
 
     public function __construct(string $webroot, LoggerInterface $logger = null)
     {
-        $mimeTypes = new MimeTypes();
         $totalSize = 0;
         $byteFormatter = (new ByteFormatter())->setPrecision(2)->setFormat('%v%u');
         $directory = new \RecursiveDirectoryIterator($webroot);
@@ -46,7 +44,8 @@ final class WebrootPreloadMiddleware
                 'contents' => file_get_contents($fileinfo->getPathname()),
             ];
 
-            $mime = $mimeTypes->resolveMimeType($fileinfo->getPathname());
+            $mime = get_file_mime_type($fileinfo->getPathname());
+            list($mime) = explode(';', $mime);
             if (strpos($mime, '/') !== false) {
                 $this->files[$filePath]['mime'] = $mime;
             }
