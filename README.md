@@ -23,12 +23,12 @@ files containing passwords etc etc should be in there.
 
 ```php
 $webroot = '/var/www/';
-$logger = new Psr3Logger(); 
-$server = new Server(new MiddlewareRunner([
+$logger = new Psr3Logger(); // Optional, PSR-3 logger for bootstrap logging 
+$server = new Server([
     /** Other middleware */
     new WebrootPreloadMiddleware($webroot, $logger),
     /** Other middleware */
-]));
+]);
 ```
 
 # License
