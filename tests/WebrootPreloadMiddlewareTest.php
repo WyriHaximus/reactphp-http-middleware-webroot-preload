@@ -75,7 +75,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([
             'Content-Type' => [
-                'text/html',
+                'text/x-php',
             ],
         ], $response->getHeaders());
         self::assertSame(file_get_contents(__FILE__), (string)$response->getBody());

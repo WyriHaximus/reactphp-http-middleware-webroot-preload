@@ -2,7 +2,6 @@
 
 namespace WyriHaximus\React\Http\Middleware;
 
-use Defr\PhpMimeType\MimeType;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use RingCentral\Psr7\Response;
@@ -45,7 +44,8 @@ final class WebrootPreloadMiddleware
                 'contents' => file_get_contents($fileinfo->getPathname()),
             ];
 
-            $mime = MimeType::get($fileinfo->getPathname());
+            $mime = get_file_mime_type($fileinfo->getPathname());
+            list($mime) = explode(';', $mime);
             if (strpos($mime, '/') !== false) {
                 $this->files[$filePath]['mime'] = $mime;
             }
