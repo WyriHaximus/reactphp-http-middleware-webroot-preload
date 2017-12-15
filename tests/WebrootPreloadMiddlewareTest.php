@@ -101,7 +101,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
 
         yield [
             'app.js',
-            'text/javascript',
+            'application/javascript',
         ];
 
         yield [
