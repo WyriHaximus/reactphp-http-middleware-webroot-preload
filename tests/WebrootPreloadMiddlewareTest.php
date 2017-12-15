@@ -7,14 +7,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\AbstractLogger;
 use React\Http\Io\ServerRequest;
 use React\Http\Response;
-use ScriptFUSION\Byte\ByteFormatter;
 use WyriHaximus\React\Http\Middleware\WebrootPreloadMiddleware;
 
 final class WebrootPreloadMiddlewareTest extends TestCase
 {
     public function testLogger()
     {
-        $byteFormatter = (new ByteFormatter())->setPrecision(2)->setFormat('%v%u');
         $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
         $logger = new class() extends AbstractLogger {
             private $messages = [];
@@ -38,11 +36,43 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         self::assertSame([
             [
                 'level' => 'debug',
-                'message' => '/style.css: ' . $byteFormatter->format(filesize(__FILE__)),
+                'message' => '/robots.txt: 68B',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/app.js: 27B',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/favicon.ico: 5.3KiB',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/google.png: 594B',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/mind-blown.gif: 4.37MiB',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/index.html: 453B',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/android.jpg: 16.3KiB',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/app.css: 18B',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/mind-blown.webp: 2.28MiB',
             ],
             [
                 'level' => 'info',
-                'message' => 'Preloaded 1 file(s) with a combined size of ' . $byteFormatter->format(filesize(__FILE__)) . ' from "' . __DIR__ . '" into memory',
+                'message' => 'Preloaded 9 file(s) with a combined size of 6.68MiB from "' . $webroot . '" into memory',
             ],
         ], $logger->getMessages());
     }
