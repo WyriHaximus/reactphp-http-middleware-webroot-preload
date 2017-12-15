@@ -5,8 +5,8 @@ namespace WyriHaximus\React\Tests\Http\Middleware;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\AbstractLogger;
+use React\Http\Io\ServerRequest;
 use React\Http\Response;
-use React\Http\ServerRequest;
 use ScriptFUSION\Byte\ByteFormatter;
 use WyriHaximus\React\Http\Middleware\WebrootPreloadMiddleware;
 
