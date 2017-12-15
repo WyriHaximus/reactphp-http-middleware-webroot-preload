@@ -80,7 +80,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         ];
 
         yield [
-            'index.html',
+            'robots.txt',
             'text/plain',
         ];
 
@@ -124,6 +124,6 @@ final class WebrootPreloadMiddlewareTest extends TestCase
                 $contentType,
             ],
         ], $response->getHeaders());
-        self::assertSame(file_get_contents(__FILE__), (string)$response->getBody());
+        self::assertSame(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR . $file), (string)$response->getBody());
     }
 }
