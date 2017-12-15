@@ -23,6 +23,10 @@ final class WebrootPreloadMiddleware
         $byteFormatter = (new ByteFormatter())->setPrecision(2)->setFormat('%v%u');
         $directory = new \RecursiveDirectoryIterator($webroot);
         $directory = new \RecursiveIteratorIterator($directory);
+        $directory = iterator_to_array($directory);
+        usort($directory, function ($a, $b) {
+            return $a->getPathname() <=> $b->getPathname();
+        });
         foreach ($directory as $fileinfo) {
             if (!$fileinfo->isFile()) {
                 continue;
