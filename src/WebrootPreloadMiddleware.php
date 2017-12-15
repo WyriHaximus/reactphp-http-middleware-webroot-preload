@@ -2,7 +2,6 @@
 
 namespace WyriHaximus\React\Http\Middleware;
 
-use Hoa\Mime\Mime;
 use Narrowspark\Mimetypes\MimeTypeByExtensionGuesser;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
