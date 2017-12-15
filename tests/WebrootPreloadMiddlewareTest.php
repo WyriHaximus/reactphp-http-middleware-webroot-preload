@@ -7,15 +7,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\AbstractLogger;
 use React\Http\Io\ServerRequest;
 use React\Http\Response;
-use ScriptFUSION\Byte\ByteFormatter;
 use WyriHaximus\React\Http\Middleware\WebrootPreloadMiddleware;
 
 final class WebrootPreloadMiddlewareTest extends TestCase
 {
     public function testLogger()
     {
-        $byteFormatter = (new ByteFormatter())->setPrecision(2)->setFormat('%v%u');
-        $webroot = __DIR__;
+        $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
         $logger = new class() extends AbstractLogger {
             private $messages = [];
 
@@ -38,11 +36,43 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         self::assertSame([
             [
                 'level' => 'debug',
-                'message' => '/WebrootPreloadMiddlewareTest.php: ' . $byteFormatter->format(filesize(__FILE__)),
+                'message' => '/android.jpg: 16.3KiB',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/app.css: 18B',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/app.js: 27B',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/favicon.ico: 5.3KiB',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/google.png: 594B',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/index.html: 453B',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/mind-blown.gif: 4.37MiB',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/mind-blown.webp: 2.28MiB',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/robots.txt: 68B',
             ],
             [
                 'level' => 'info',
-                'message' => 'Preloaded 1 file(s) with a combined size of ' . $byteFormatter->format(filesize(__FILE__)) . ' from "' . __DIR__ . '" into memory',
+                'message' => 'Preloaded 9 file(s) with a combined size of 6.68MiB from "' . $webroot . '" into memory',
             ],
         ], $logger->getMessages());
     }
@@ -50,7 +80,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
     public function testMiss()
     {
         $request = new ServerRequest('GET', 'https://example.com/');
-        $middleware = new WebrootPreloadMiddleware(__DIR__);
+        $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
         $next = function () {
             return new Response(200);
         };
@@ -62,10 +92,56 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         self::assertSame('', (string)$response->getBody());
     }
 
-    public function testHit()
+    public function provideHits()
     {
-        $request = new ServerRequest('GET', 'https://example.com/' . basename(__FILE__));
-        $middleware = new WebrootPreloadMiddleware(__DIR__);
+        yield [
+            'app.css',
+            'text/css',
+        ];
+
+        yield [
+            'app.js',
+            'application/javascript',
+        ];
+
+        yield [
+            'index.html',
+            'text/html',
+        ];
+
+        yield [
+            'robots.txt',
+            'text/plain',
+        ];
+
+        yield [
+            'google.png',
+            'image/png',
+        ];
+
+        yield [
+            'android.jpg',
+            'image/jpeg',
+        ];
+
+        yield [
+            'mind-blown.gif',
+            'image/gif',
+        ];
+
+        yield [
+            'mind-blown.webp',
+            'image/webp',
+        ];
+    }
+
+    /**
+     * @dataProvider provideHits
+     */
+    public function testHit(string $file, string $contentType)
+    {
+        $request = new ServerRequest('GET', 'https://example.com/' . $file);
+        $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
         $next = function () {
             return new Response(200);
         };
@@ -75,9 +151,9 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([
             'Content-Type' => [
-                'text/x-php',
+                $contentType,
             ],
         ], $response->getHeaders());
-        self::assertSame(file_get_contents(__FILE__), (string)$response->getBody());
+        self::assertSame(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR . $file), (string)$response->getBody());
     }
 }

@@ -2,6 +2,7 @@
 
 namespace WyriHaximus\React\Http\Middleware;
 
+use Narrowspark\Mimetypes\MimeTypeByExtensionGuesser;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use RingCentral\Psr7\Response;
@@ -21,6 +22,10 @@ final class WebrootPreloadMiddleware
         $byteFormatter = (new ByteFormatter())->setPrecision(2)->setFormat('%v%u');
         $directory = new \RecursiveDirectoryIterator($webroot);
         $directory = new \RecursiveIteratorIterator($directory);
+        $directory = iterator_to_array($directory);
+        usort($directory, function ($a, $b) {
+            return $a->getPathname() <=> $b->getPathname();
+        });
         foreach ($directory as $fileinfo) {
             if (!$fileinfo->isFile()) {
                 continue;
@@ -44,7 +49,7 @@ final class WebrootPreloadMiddleware
                 'contents' => file_get_contents($fileinfo->getPathname()),
             ];
 
-            $mime = get_file_mime_type($fileinfo->getPathname());
+            $mime = MimeTypeByExtensionGuesser::guess($fileinfo->getExtension());
             list($mime) = explode(';', $mime);
             if (strpos($mime, '/') !== false) {
                 $this->files[$filePath]['mime'] = $mime;
