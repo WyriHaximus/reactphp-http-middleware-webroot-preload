@@ -36,7 +36,11 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         self::assertSame([
             [
                 'level' => 'debug',
-                'message' => '/robots.txt: 68B',
+                'message' => '/android.jpg: 16.3KiB',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/app.css: 18B',
             ],
             [
                 'level' => 'debug',
@@ -52,23 +56,19 @@ final class WebrootPreloadMiddlewareTest extends TestCase
             ],
             [
                 'level' => 'debug',
-                'message' => '/mind-blown.gif: 4.37MiB',
-            ],
-            [
-                'level' => 'debug',
                 'message' => '/index.html: 453B',
             ],
             [
                 'level' => 'debug',
-                'message' => '/android.jpg: 16.3KiB',
-            ],
-            [
-                'level' => 'debug',
-                'message' => '/app.css: 18B',
+                'message' => '/mind-blown.gif: 4.37MiB',
             ],
             [
                 'level' => 'debug',
                 'message' => '/mind-blown.webp: 2.28MiB',
+            ],
+            [
+                'level' => 'debug',
+                'message' => '/robots.txt: 68B',
             ],
             [
                 'level' => 'info',
