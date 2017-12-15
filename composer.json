@@ -9,8 +9,8 @@
         }
     ],
     "require": {
-        "php": "^7.0",
-        "cedricziel/stupidmime": "^0.0.2",
+        "php": "^7.1",
+        "narrowspark/mimetypes": "^0.1.2",
         "psr/http-message": "^1.0",
         "psr/log": "^1.0",
         "react/http": "^0.8.0",
@@ -34,7 +34,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "7.0"
+            "php": "7.1"
         }
     },
     "scripts": {
