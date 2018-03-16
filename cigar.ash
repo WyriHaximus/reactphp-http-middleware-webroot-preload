@@ -3,7 +3,7 @@
 function main() {
     php examples/basic.php &
     local pid=$!
-    sleep 5
+    sleep 1
     ./vendor/bin/cigar
     local ec=$?
     kill -9 $pid
