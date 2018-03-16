@@ -30,3 +30,6 @@ unit-coverage:
 
 ci-coverage: init
 	composer ci-coverage
+
+smoke:
+	composer run-script smoke --timeout=0
