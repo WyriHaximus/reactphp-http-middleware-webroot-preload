@@ -71,8 +71,12 @@ final class WebrootPreloadMiddlewareTest extends TestCase
                 'message' => '/robots.txt: 68B',
             ],
             [
+                'level' => 'debug',
+                'message' => '/unknown.unknown_extension: 73B',
+            ],
+            [
                 'level' => 'info',
-                'message' => 'Preloaded 9 file(s) with a combined size of 6.68MiB from "' . $webroot . '" into memory',
+                'message' => 'Preloaded 10 file(s) with a combined size of 6.68MiB from "' . $webroot . '" into memory',
             ],
         ], $logger->getMessages());
     }

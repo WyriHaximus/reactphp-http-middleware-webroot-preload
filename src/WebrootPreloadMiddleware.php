@@ -50,6 +50,9 @@ final class WebrootPreloadMiddleware
             ];
 
             $mime = MimeTypeByExtensionGuesser::guess($fileinfo->getExtension());
+            if (is_null($mime)) {
+                $mime = 'application/octet-stream';
+            }
             list($mime) = explode(';', $mime);
             if (strpos($mime, '/') !== false) {
                 $this->files[$filePath]['mime'] = $mime;
