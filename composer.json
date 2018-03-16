@@ -82,7 +82,8 @@
             "@unit"
         ],
         "qa-ci": [
-            "@unit"
+            "@unit",
+            "@smoke"
         ],
         "qa-ci-extended": [
             "@qa-all-coverage"
