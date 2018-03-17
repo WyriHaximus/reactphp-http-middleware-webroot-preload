@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e202ce11745ca3a744d19e9c0a43c023",
+    "content-hash": "d81bf5f0a2b912b87e8323a1f1ec57b8",
     "packages": [
         {
             "name": "evenement/evenement",
@@ -823,16 +823,16 @@
         },
         {
             "name": "brunty/cigar",
-            "version": "1.7.2",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Brunty/cigar.git",
-                "reference": "12ff37c7fdbe8fcf9302dd2538ddbf51e0276b89"
+                "reference": "664cc1007a502130063bb8a8969870830c530798"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Brunty/cigar/zipball/12ff37c7fdbe8fcf9302dd2538ddbf51e0276b89",
-                "reference": "12ff37c7fdbe8fcf9302dd2538ddbf51e0276b89",
+                "url": "https://api.github.com/repos/Brunty/cigar/zipball/664cc1007a502130063bb8a8969870830c530798",
+                "reference": "664cc1007a502130063bb8a8969870830c530798",
                 "shasum": ""
             },
             "require": {
@@ -864,7 +864,7 @@
                 }
             ],
             "description": "Smoke testing tool written in PHP.",
-            "time": "2018-03-12T16:54:27+00:00"
+            "time": "2018-03-16T23:31:33+00:00"
         },
         {
             "name": "clue/block-react",
