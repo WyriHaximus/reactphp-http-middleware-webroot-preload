@@ -36,43 +36,43 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         self::assertSame([
             [
                 'level' => 'debug',
-                'message' => '/android.jpg: 16.3KiB',
+                'message' => '/android.jpg: 16.3KiB (image/jpeg)',
             ],
             [
                 'level' => 'debug',
-                'message' => '/app.css: 18B',
+                'message' => '/app.css: 18B (text/css)',
             ],
             [
                 'level' => 'debug',
-                'message' => '/app.js: 27B',
+                'message' => '/app.js: 27B (application/javascript)',
             ],
             [
                 'level' => 'debug',
-                'message' => '/favicon.ico: 5.3KiB',
+                'message' => '/favicon.ico: 5.3KiB (image/x-icon)',
             ],
             [
                 'level' => 'debug',
-                'message' => '/google.png: 594B',
+                'message' => '/google.png: 594B (image/png)',
             ],
             [
                 'level' => 'debug',
-                'message' => '/index.html: 453B',
+                'message' => '/index.html: 453B (text/html)',
             ],
             [
                 'level' => 'debug',
-                'message' => '/mind-blown.gif: 4.37MiB',
+                'message' => '/mind-blown.gif: 4.37MiB (image/gif)',
             ],
             [
                 'level' => 'debug',
-                'message' => '/mind-blown.webp: 2.28MiB',
+                'message' => '/mind-blown.webp: 2.28MiB (image/webp)',
             ],
             [
                 'level' => 'debug',
-                'message' => '/robots.txt: 68B',
+                'message' => '/robots.txt: 68B (text/plain)',
             ],
             [
                 'level' => 'debug',
-                'message' => '/unknown.unknown_extension: 73B',
+                'message' => '/unknown.unknown_extension: 73B (application/octet-stream)',
             ],
             [
                 'level' => 'info',

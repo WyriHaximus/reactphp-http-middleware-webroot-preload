@@ -61,7 +61,7 @@ final class WebrootPreloadMiddleware
             if ($logger instanceof LoggerInterface) {
                 $fileSize = strlen($this->files[$filePath]['contents']);
                 $totalSize += $fileSize;
-                $logger->debug($filePath . ': ' . $byteFormatter->format($fileSize));
+                $logger->debug($filePath . ': ' . $byteFormatter->format($fileSize) . ' (' . $this->files[$filePath]['mime'] . ')');
             }
         }
 
