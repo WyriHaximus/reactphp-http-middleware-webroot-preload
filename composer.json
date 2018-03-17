@@ -17,9 +17,10 @@
         "scriptfusion/byte-formatter": "^3.2"
     },
     "require-dev": {
-        "ringcentral/psr7": "^1.2",
+        "api-clients/test-utilities": "^4.2",
+        "brunty/cigar": "^1.8",
         "psr/log": "^1.0",
-        "api-clients/test-utilities": "^4.2"
+        "ringcentral/psr7": "^1.2"
     },
     "autoload": {
         "psr-4": {
@@ -59,15 +60,21 @@
             "@ensure-installed",
             "parallel-lint --exclude vendor ."
         ],
+        "smoke": [
+            "@ensure-installed",
+            "./cigar.ash"
+        ],
         "qa-all": [
             "@lint-php",
             "@cs",
-            "@unit"
+            "@unit",
+            "@smoke"
         ],
         "qa-all-coverage": [
             "@lint-php",
             "@cs",
-            "@unit-coverage"
+            "@unit-coverage",
+            "@smoke"
         ],
         "qa-windows": [
             "@lint-php",
@@ -75,7 +82,8 @@
             "@unit"
         ],
         "qa-ci": [
-            "@unit"
+            "@unit",
+            "@smoke"
         ],
         "qa-ci-extended": [
             "@qa-all-coverage"

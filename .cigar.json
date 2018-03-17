@@ -1,0 +1,56 @@
+[
+  {
+    "url": "http://localhost:9001/",
+    "status": 102
+  },
+  {
+    "url": "http://localhost:9001/android.jpg",
+    "status": 200,
+    "content-type": "image/jpeg"
+  },
+  {
+    "url": "http://localhost:9001/app.css",
+    "status": 200,
+    "content-type": "text/css"
+  },
+  {
+    "url": "http://localhost:9001/app.js",
+    "status": 200,
+    "content-type": "application/javascript"
+  },
+  {
+    "url": "http://localhost:9001/favicon.ico",
+    "status": 200,
+    "content-type": "image/x-icon"
+  },
+  {
+    "url": "http://localhost:9001/google.png",
+    "status": 200,
+    "content-type": "image/png"
+  },
+  {
+    "url": "http://localhost:9001/index.html",
+    "status": 200,
+    "content-type": "text/html"
+  },
+  {
+    "url": "http://localhost:9001/mind-blown.gif",
+    "status": 200,
+    "content-type": "image/gif"
+  },
+  {
+    "url": "http://localhost:9001/mind-blown.webp",
+    "status": 200,
+    "content-type": "image/webp"
+  },
+  {
+    "url": "http://localhost:9001/robots.txt",
+    "status": 200,
+    "content-type": "text/plain"
+  },
+  {
+    "url": "http://localhost:9001/unknown.unknown_extension",
+    "status": 200,
+    "content-type": "application/octet-stream"
+  }
+]
