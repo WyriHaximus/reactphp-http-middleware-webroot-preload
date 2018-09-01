@@ -2,12 +2,13 @@
 
 namespace WyriHaximus\React\Tests\Http\Middleware;
 
-use PHPUnit\Framework\TestCase;
+use ApiClients\Tools\TestUtilities\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\AbstractLogger;
 use React\Http\Io\ServerRequest;
 use React\Http\Response;
 use WyriHaximus\React\Http\Middleware\WebrootPreloadMiddleware;
+use function React\Promise\resolve;
 
 final class WebrootPreloadMiddlewareTest extends TestCase
 {
@@ -89,7 +90,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
             return new Response(200);
         };
         /** @var ResponseInterface $response */
-        $response = $middleware($request, $next);
+        $response = $this->await(resolve($middleware($request, $next)));
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([], $response->getHeaders());
@@ -150,7 +151,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
             return new Response(200);
         };
         /** @var ResponseInterface $response */
-        $response = $middleware($request, $next);
+        $response = $this->await(resolve($middleware($request, $next)));
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([
