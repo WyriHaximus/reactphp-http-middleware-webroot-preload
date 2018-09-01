@@ -36,7 +36,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         self::assertSame([
             [
                 'level' => 'debug',
-                'message' => '/android.jpg: 16.3KiB (image/jpeg)',
+                'message' => '/android.jpg: 15.61KiB (image/jpeg)',
             ],
             [
                 'level' => 'debug',
