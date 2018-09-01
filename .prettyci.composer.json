@@ -1,5 +1,5 @@
 {
     "require-dev": {
-        "api-clients/test-utilities": "^4.2"
+        "api-clients/cs-fixer-config": "^1.0"
     }
 }
