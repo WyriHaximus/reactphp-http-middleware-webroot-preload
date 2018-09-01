@@ -76,7 +76,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
             ],
             [
                 'level' => 'info',
-                'message' => 'Preloaded 10 file(s) with a combined size of 6.68MiB from "' . $webroot . '" into memory',
+                'message' => 'Preloaded 10 file(s) with a combined size of 6.67MiB from "' . $webroot . '" into memory',
             ],
         ], $logger->getMessages());
     }
