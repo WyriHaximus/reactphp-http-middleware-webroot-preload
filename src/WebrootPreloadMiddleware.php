@@ -5,20 +5,23 @@ namespace WyriHaximus\React\Http\Middleware;
 use Narrowspark\Mimetypes\MimeTypeByExtensionGuesser;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
+use React\Cache\ArrayCache;
+use React\Cache\CacheInterface;
 use RingCentral\Psr7\Response;
 use ScriptFUSION\Byte\ByteFormatter;
 use function RingCentral\Psr7\stream_for;
 
 final class WebrootPreloadMiddleware
 {
-    /**
-     * @var array
-     */
-    private $files = [];
+    /** @var CacheInterface */
+    private $cache;
 
-    public function __construct(string $webroot, LoggerInterface $logger = null)
+    public function __construct(string $webroot, LoggerInterface $logger = null, CacheInterface $cache = null)
     {
+        $this->cache = $cache ?? new ArrayCache();
+
         $totalSize = 0;
+        $count = 0;
         $byteFormatter = (new ByteFormatter())->setPrecision(2)->setFormat('%v%u');
         $directory = new \RecursiveDirectoryIterator($webroot);
         $directory = new \RecursiveIteratorIterator($directory);
@@ -45,7 +48,7 @@ final class WebrootPreloadMiddleware
                 $fileinfo->getPathname()
             );
 
-            $this->files[$filePath] = [
+            $item = [
                 'contents' => file_get_contents($fileinfo->getPathname()),
             ];
 
@@ -55,33 +58,38 @@ final class WebrootPreloadMiddleware
             }
             list($mime) = explode(';', $mime);
             if (strpos($mime, '/') !== false) {
-                $this->files[$filePath]['mime'] = $mime;
+                $item['mime'] = $mime;
             }
 
+            $this->cache->set($filePath, $item);
+            $count++;
             if ($logger instanceof LoggerInterface) {
-                $fileSize = strlen($this->files[$filePath]['contents']);
+                $fileSize = strlen($item['contents']);
                 $totalSize += $fileSize;
-                $logger->debug($filePath . ': ' . $byteFormatter->format($fileSize) . ' (' . $this->files[$filePath]['mime'] . ')');
+                $logger->debug($filePath . ': ' . $byteFormatter->format($fileSize) . ' (' . $item['mime'] . ')');
             }
         }
 
         if ($logger instanceof LoggerInterface) {
-            $logger->info('Preloaded ' . count($this->files) . ' file(s) with a combined size of ' . $byteFormatter->format($totalSize) . ' from "' . $webroot . '" into memory');
+            $logger->info('Preloaded ' . $count . ' file(s) with a combined size of ' . $byteFormatter->format($totalSize) . ' from "' . $webroot . '" into memory');
         }
     }
 
     public function __invoke(ServerRequestInterface $request, callable $next)
     {
         $path = $request->getUri()->getPath();
-        if (!isset($this->files[$path])) {
-            return $next($request);
-        }
 
-        $response = (new Response(200))->withBody(stream_for($this->files[$path]['contents']));
-        if (!isset($this->files[$path]['mime'])) {
-            return $response;
-        }
+        return $this->cache->get($path)->then(function ($item) use ($next, $request) {
+            if ($item === null) {
+                return $next($request);
+            }
 
-        return $response->withHeader('Content-Type', $this->files[$path]['mime']);
+            $response = (new Response(200))->withBody(stream_for($item['contents']));
+            if (!isset($item['mime'])) {
+                return $response;
+            }
+
+            return $response->withHeader('Content-Type', $item['mime']);
+        });
     }
 }
