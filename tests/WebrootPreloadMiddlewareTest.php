@@ -37,7 +37,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         self::assertSame([
             [
                 'level' => 'debug',
-                'message' => '/android.jpg: 16.3KiB (image/jpeg)',
+                'message' => '/android.jpg: 15.61KiB (image/jpeg)',
             ],
             [
                 'level' => 'debug',
@@ -77,7 +77,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
             ],
             [
                 'level' => 'info',
-                'message' => 'Preloaded 10 file(s) with a combined size of 6.68MiB from "' . $webroot . '" into memory',
+                'message' => 'Preloaded 10 file(s) with a combined size of 6.67MiB from "' . $webroot . '" into memory',
             ],
         ], $logger->getMessages());
     }
