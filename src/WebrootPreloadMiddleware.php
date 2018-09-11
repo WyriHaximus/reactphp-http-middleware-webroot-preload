@@ -51,6 +51,7 @@ final class WebrootPreloadMiddleware
             $item = [
                 'contents' => file_get_contents($fileinfo->getPathname()),
             ];
+            $item['etag'] = md5($item['contents']) . '-' . filemtime($fileinfo->getPathname());
 
             $mime = MimeTypeByExtensionGuesser::guess($fileinfo->getExtension());
             if (is_null($mime)) {
@@ -89,7 +90,7 @@ final class WebrootPreloadMiddleware
                 return $response;
             }
 
-            return $response->withHeader('Content-Type', $item['mime']);
+            return $response->withHeader('Content-Type', $item['mime'])->withHeader('ETag', $item['etag']);
         });
     }
 }

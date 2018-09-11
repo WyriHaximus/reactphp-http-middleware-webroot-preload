@@ -102,48 +102,56 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         yield [
             'app.css',
             'text/css',
+            '66b63ea66df33350dbfc10c06473ad00-1513370964',
         ];
 
         yield [
             'app.js',
             'application/javascript',
+            '5dd2db54ae0f849ac375c43d8926e3b0-1513370964',
         ];
 
         yield [
             'index.html',
             'text/html',
+            'ff17bdff9b7222206667cbda2004efb4-1513370964',
         ];
 
         yield [
             'robots.txt',
             'text/plain',
+            '4900e3b08f7e54d7710f1ce3318f8b8d-1513370964',
         ];
 
         yield [
             'google.png',
             'image/png',
+            'b4db2a4b6d91e0df5850a3fdcee9c8df-1513370964',
         ];
 
         yield [
             'android.jpg',
             'image/jpeg',
+            'ce9ad62490af54cf5741f8404e0463e7-1535917142',
         ];
 
         yield [
             'mind-blown.gif',
             'image/gif',
+            '0c119d1e5901e83563072eb67774c035-1513370964',
         ];
 
         yield [
             'mind-blown.webp',
             'image/webp',
+            '48a97a5b92a1e34df5c7fd42e5ae1db7-1513370964',
         ];
     }
 
     /**
      * @dataProvider provideHits
      */
-    public function testHit(string $file, string $contentType)
+    public function testHit(string $file, string $contentType, string $etag)
     {
         $request = new ServerRequest('GET', 'https://example.com/' . $file);
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
@@ -157,6 +165,9 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         self::assertSame([
             'Content-Type' => [
                 $contentType,
+            ],
+            'ETag' => [
+                $etag,
             ],
         ], $response->getHeaders());
         self::assertSame(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR . $file), (string)$response->getBody());
