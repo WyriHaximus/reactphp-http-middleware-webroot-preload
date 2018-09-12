@@ -85,9 +85,17 @@ final class WebrootPreloadMiddleware
                 return $next($request);
             }
 
+            if ($request->hasHeader('If-None-Match')) {
+                $etag = current($request->getHeader('If-None-Match'));
+                $etag = trim($etag, '"');
+                if ($etag === $item['etag']) {
+                    return new Response(304);
+                }
+            }
+
             $response = (new Response(200))->
                 withBody(stream_for($item['contents']))->
-                withHeader('ETag', $item['etag'])
+                withHeader('ETag', '"' . $item['etag'] . '"')
             ;
             if (!isset($item['mime'])) {
                 return $response;
