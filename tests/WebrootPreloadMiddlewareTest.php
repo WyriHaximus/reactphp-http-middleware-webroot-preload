@@ -185,12 +185,12 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         ];
 
         yield [
-            '"0c119d1e5901e83563072eb67774c035-' . filemtime($webroot . 'mind-blown.gif') . '"',
+            '"0c119d1e5901e83563072eb67774c035-' . filesize($webroot . 'mind-blown.gif') . '"',
             304,
         ];
 
         yield [
-            '0c119d1e5901e83563072eb67774c035-' . filemtime($webroot . 'mind-blown.gif'),
+            '0c119d1e5901e83563072eb67774c035-' . filesize($webroot . 'mind-blown.gif'),
             304,
         ];
     }
