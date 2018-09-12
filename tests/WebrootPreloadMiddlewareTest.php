@@ -166,7 +166,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([
             'ETag' => [
-                $etag,
+                '"' . $etag . '"',
             ],
             'Content-Type' => [
                 $contentType,

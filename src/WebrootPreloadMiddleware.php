@@ -95,7 +95,7 @@ final class WebrootPreloadMiddleware
 
             $response = (new Response(200))->
                 withBody(stream_for($item['contents']))->
-                withHeader('ETag', $item['etag'])
+                withHeader('ETag', '"' . $item['etag'] . '"')
             ;
             if (!isset($item['mime'])) {
                 return $response;
