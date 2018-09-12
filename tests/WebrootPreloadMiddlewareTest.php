@@ -174,4 +174,48 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         ], $response->getHeaders());
         self::assertSame(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR . $file), (string)$response->getBody());
     }
+
+    public function provideEtagIfNoneMatch()
+    {
+        $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
+
+        yield [
+            '"123"',
+            200,
+        ];
+
+        yield [
+            '"0c119d1e5901e83563072eb67774c035-' . filemtime($webroot . 'mind-blown.gif') . '"',
+            304,
+        ];
+
+        yield [
+            '0c119d1e5901e83563072eb67774c035-' . filemtime($webroot . 'mind-blown.gif'),
+            304,
+        ];
+    }
+
+    /**
+     * @param string $etag
+     * @param int    $statusCode
+     * @dataProvider provideEtagIfNoneMatch
+     */
+    public function testEtagIfNoneMatch(string $etag, int $statusCode)
+    {
+        $request = new ServerRequest(
+            'GET',
+            'https://example.com/mind-blown.gif',
+            [
+                'If-None-Match' => $etag,
+            ]
+        );
+        $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
+        $next = function () {
+            return new Response(200);
+        };
+        /** @var ResponseInterface $response */
+        $response = $this->await(resolve($middleware($request, $next)));
+
+        self::assertSame($statusCode, $response->getStatusCode());
+    }
 }
