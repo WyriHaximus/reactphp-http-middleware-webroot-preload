@@ -51,7 +51,7 @@ final class WebrootPreloadMiddleware
             $item = [
                 'contents' => file_get_contents($fileinfo->getPathname()),
             ];
-            $item['etag'] = md5($item['contents']) . '-' . filemtime($fileinfo->getPathname());
+            $item['etag'] = md5($item['contents']) . '-' . filesize($fileinfo->getPathname());
 
             $mime = MimeTypeByExtensionGuesser::guess($fileinfo->getExtension());
             if (is_null($mime)) {

@@ -104,49 +104,49 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         yield [
             'app.css',
             'text/css',
-            '66b63ea66df33350dbfc10c06473ad00-' . filemtime($webroot . 'app.css'),
+            '66b63ea66df33350dbfc10c06473ad00-' . filesize($webroot . 'app.css'),
         ];
 
         yield [
             'app.js',
             'application/javascript',
-            '5dd2db54ae0f849ac375c43d8926e3b0-' . filemtime($webroot . 'app.js'),
+            '5dd2db54ae0f849ac375c43d8926e3b0-' . filesize($webroot . 'app.js'),
         ];
 
         yield [
             'index.html',
             'text/html',
-            'ff17bdff9b7222206667cbda2004efb4-' . filemtime($webroot . 'index.html'),
+            'ff17bdff9b7222206667cbda2004efb4-' . filesize($webroot . 'index.html'),
         ];
 
         yield [
             'robots.txt',
             'text/plain',
-            '4900e3b08f7e54d7710f1ce3318f8b8d-' . filemtime($webroot . 'robots.txt'),
+            '4900e3b08f7e54d7710f1ce3318f8b8d-' . filesize($webroot . 'robots.txt'),
         ];
 
         yield [
             'google.png',
             'image/png',
-            'b4db2a4b6d91e0df5850a3fdcee9c8df-' . filemtime($webroot . 'google.png'),
+            'b4db2a4b6d91e0df5850a3fdcee9c8df-' . filesize($webroot . 'google.png'),
         ];
 
         yield [
             'android.jpg',
             'image/jpeg',
-            'ce9ad62490af54cf5741f8404e0463e7-' . filemtime($webroot . 'android.jpg'),
+            'ce9ad62490af54cf5741f8404e0463e7-' . filesize($webroot . 'android.jpg'),
         ];
 
         yield [
             'mind-blown.gif',
             'image/gif',
-            '0c119d1e5901e83563072eb67774c035-' . filemtime($webroot . 'mind-blown.gif'),
+            '0c119d1e5901e83563072eb67774c035-' . filesize($webroot . 'mind-blown.gif'),
         ];
 
         yield [
             'mind-blown.webp',
             'image/webp',
-            '48a97a5b92a1e34df5c7fd42e5ae1db7-' . filemtime($webroot . 'mind-blown.webp'),
+            '48a97a5b92a1e34df5c7fd42e5ae1db7-' . filesize($webroot . 'mind-blown.webp'),
         ];
     }
 
