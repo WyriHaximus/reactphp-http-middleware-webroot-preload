@@ -85,12 +85,15 @@ final class WebrootPreloadMiddleware
                 return $next($request);
             }
 
-            $response = (new Response(200))->withBody(stream_for($item['contents']));
+            $response = (new Response(200))->
+                withBody(stream_for($item['contents']))->
+                withHeader('ETag', $item['etag'])
+            ;
             if (!isset($item['mime'])) {
                 return $response;
             }
 
-            return $response->withHeader('Content-Type', $item['mime'])->withHeader('ETag', $item['etag']);
+            return $response->withHeader('Content-Type', $item['mime']);
         });
     }
 }

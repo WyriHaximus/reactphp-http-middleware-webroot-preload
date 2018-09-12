@@ -165,11 +165,11 @@ final class WebrootPreloadMiddlewareTest extends TestCase
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([
-            'Content-Type' => [
-                $contentType,
-            ],
             'ETag' => [
                 $etag,
+            ],
+            'Content-Type' => [
+                $contentType,
             ],
         ], $response->getHeaders());
         self::assertSame(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR . $file), (string)$response->getBody());
