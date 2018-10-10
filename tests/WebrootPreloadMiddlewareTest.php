@@ -195,6 +195,34 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         ];
     }
 
+    public function provideEtagIfMatchOK()
+    {
+        $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
+
+        yield [
+            '"0c119d1e5901e83563072eb67774c035-' . filesize($webroot . 'mind-blown.gif') . '"',
+            200,
+        ];
+
+        yield [
+            '0c119d1e5901e83563072eb67774c035-' . filesize($webroot . 'mind-blown.gif'),
+            200,
+        ];
+    }
+
+    public function provideEtagIfMatchPreconditionFails()
+    {
+        yield [
+            '"' . md5('FailMe') . '"',
+            412,
+        ];
+
+        yield [
+            '"'. md5('WillNotMatch!').'"',
+            412,
+        ];
+    }
+
     /**
      * @param string $etag
      * @param int    $statusCode
@@ -216,6 +244,50 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         /** @var ResponseInterface $response */
         $response = $this->await(resolve($middleware($request, $next)));
 
+        self::assertSame($statusCode, $response->getStatusCode());
+    }
+
+    /**
+     * @param string $etag
+     * @param int    $statusCode
+     * @dataProvider provideEtagIfMatchOK
+     */
+    public function testEtagIfMatchOK(string $etag, int $statusCode)
+    {
+        $request = new ServerRequest(
+            'DELETE',
+            'https://example.com/mind-blown.gif',
+            [
+                'If-Match' => $etag,
+            ]
+        );
+        $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
+        $next = function () {
+            return new Response(200);
+        };
+        $response = $this->await(resolve($middleware($request, $next)));
+        self::assertSame($statusCode, $response->getStatusCode());
+    }
+
+    /**
+     * @param string $etag
+     * @param int    $statusCode
+     * @dataProvider provideEtagIfMatchPreconditionFails
+     */
+    public function testEtagIfMatchPreconditionFails(string $etag, int $statusCode)
+    {
+        $request = new ServerRequest(
+            'DELETE',
+            'https://example.com/mind-blown.gif',
+            [
+                'If-Match' => $etag,
+            ]
+        );
+        $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
+        $next = function () {
+            return new Response(412);
+        };
+        $response = $this->await(resolve($middleware($request, $next)));
         self::assertSame($statusCode, $response->getStatusCode());
     }
 }
