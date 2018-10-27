@@ -95,12 +95,14 @@ final class WebrootPreloadMiddleware
 
             if ($request->hasHeader('If-Match')) {
                 $expectedEtag = current($request->getHeader('If-Match'));
-            foreach($expectedEtag as $item){
                 $expectedEtag = trim($expectedEtag, '"');
+                foreach($expectedEtag as $item)
+                {
                 $expectedEtag !== $item['etag'];
-              return new Response(412);
+                    return new Response(412);
+                }
             }
-          }
+
             $response = (new Response(200))->
                 withBody(stream_for($item['contents']))->
                 withHeader('ETag', '"' . $item['etag'] . '"')
