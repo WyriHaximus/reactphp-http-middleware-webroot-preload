@@ -25,8 +25,8 @@ final class WebrootPreloadMiddleware
         $byteFormatter = (new ByteFormatter())->setPrecision(2)->setFormat('%v%u');
         $directory = new \RecursiveDirectoryIterator($webroot);
         $directory = new \RecursiveIteratorIterator($directory);
-        $directory = iterator_to_array($directory);
-        usort($directory, function ($a, $b) {
+        $directory = \iterator_to_array($directory);
+        \usort($directory, function ($a, $b) {
             return $a->getPathname() <=> $b->getPathname();
         });
         foreach ($directory as $fileinfo) {
@@ -34,7 +34,7 @@ final class WebrootPreloadMiddleware
                 continue;
             }
 
-            $filePath = str_replace(
+            $filePath = \str_replace(
                 [
                     $webroot,
                     DIRECTORY_SEPARATOR,
@@ -49,23 +49,23 @@ final class WebrootPreloadMiddleware
             );
 
             $item = [
-                'contents' => file_get_contents($fileinfo->getPathname()),
+                'contents' => \file_get_contents($fileinfo->getPathname()),
             ];
-            $item['etag'] = md5($item['contents']) . '-' . filesize($fileinfo->getPathname());
+            $item['etag'] = \md5($item['contents']) . '-' . \filesize($fileinfo->getPathname());
 
             $mime = MimeTypeExtensionGuesser::guess($fileinfo->getExtension());
-            if (is_null($mime)) {
+            if (\is_null($mime)) {
                 $mime = 'application/octet-stream';
             }
-            list($mime) = explode(';', $mime);
-            if (strpos($mime, '/') !== false) {
+            list($mime) = \explode(';', $mime);
+            if (\strpos($mime, '/') !== false) {
                 $item['mime'] = $mime;
             }
 
             $this->cache->set($filePath, $item);
             $count++;
             if ($logger instanceof LoggerInterface) {
-                $fileSize = strlen($item['contents']);
+                $fileSize = \strlen($item['contents']);
                 $totalSize += $fileSize;
                 $logger->debug($filePath . ': ' . $byteFormatter->format($fileSize) . ' (' . $item['mime'] . ')');
             }
@@ -86,16 +86,16 @@ final class WebrootPreloadMiddleware
             }
 
             if ($request->hasHeader('If-None-Match')) {
-                $etag = current($request->getHeader('If-None-Match'));
-                $etag = trim($etag, '"');
+                $etag = \current($request->getHeader('If-None-Match'));
+                $etag = \trim($etag, '"');
                 if ($etag === $item['etag']) {
                     return new Response(304);
                 }
             }
 
             if ($request->hasHeader('If-Match')) {
-                $expectedEtag = current($request->getHeader('If-Match'));
-                $expectedEtag = trim($expectedEtag, '"');
+                $expectedEtag = \current($request->getHeader('If-Match'));
+                $expectedEtag = \trim($expectedEtag, '"');
                 if ($expectedEtag !== $item['etag']) {
                     return new Response(412);
                 }
