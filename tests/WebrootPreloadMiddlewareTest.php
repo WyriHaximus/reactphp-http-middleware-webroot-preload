@@ -10,15 +10,18 @@ use React\Http\Response;
 use WyriHaximus\React\Http\Middleware\WebrootPreloadMiddleware;
 use function React\Promise\resolve;
 
+/**
+ * @internal
+ */
 final class WebrootPreloadMiddlewareTest extends TestCase
 {
-    public function testLogger()
+    public function testLogger(): void
     {
         $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
         $logger = new class() extends AbstractLogger {
             private $messages = [];
 
-            public function log($level, $message, array $context = [])
+            public function log($level, $message, array $context = []): void
             {
                 $this->messages[] = [
                     'level' => $level,
@@ -49,7 +52,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
             ],
             [
                 'level' => 'debug',
-                'message' => '/favicon.ico: 5.3KiB (image/x-icon)',
+                'message' => '/favicon.ico: 5.3KiB (image/vnd.microsoft.icon)',
             ],
             [
                 'level' => 'debug',
@@ -82,7 +85,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         ], $logger->getMessages());
     }
 
-    public function testMiss()
+    public function testMiss(): void
     {
         $request = new ServerRequest('GET', 'https://example.com/');
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
@@ -104,56 +107,56 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         yield [
             'app.css',
             'text/css',
-            '66b63ea66df33350dbfc10c06473ad00-' . filesize($webroot . 'app.css'),
+            '66b63ea66df33350dbfc10c06473ad00-' . \filesize($webroot . 'app.css'),
         ];
 
         yield [
             'app.js',
             'application/javascript',
-            '5dd2db54ae0f849ac375c43d8926e3b0-' . filesize($webroot . 'app.js'),
+            '5dd2db54ae0f849ac375c43d8926e3b0-' . \filesize($webroot . 'app.js'),
         ];
 
         yield [
             'index.html',
             'text/html',
-            'ff17bdff9b7222206667cbda2004efb4-' . filesize($webroot . 'index.html'),
+            'ff17bdff9b7222206667cbda2004efb4-' . \filesize($webroot . 'index.html'),
         ];
 
         yield [
             'robots.txt',
             'text/plain',
-            '4900e3b08f7e54d7710f1ce3318f8b8d-' . filesize($webroot . 'robots.txt'),
+            '4900e3b08f7e54d7710f1ce3318f8b8d-' . \filesize($webroot . 'robots.txt'),
         ];
 
         yield [
             'google.png',
             'image/png',
-            'b4db2a4b6d91e0df5850a3fdcee9c8df-' . filesize($webroot . 'google.png'),
+            'b4db2a4b6d91e0df5850a3fdcee9c8df-' . \filesize($webroot . 'google.png'),
         ];
 
         yield [
             'android.jpg',
             'image/jpeg',
-            'ce9ad62490af54cf5741f8404e0463e7-' . filesize($webroot . 'android.jpg'),
+            'ce9ad62490af54cf5741f8404e0463e7-' . \filesize($webroot . 'android.jpg'),
         ];
 
         yield [
             'mind-blown.gif',
             'image/gif',
-            '0c119d1e5901e83563072eb67774c035-' . filesize($webroot . 'mind-blown.gif'),
+            '0c119d1e5901e83563072eb67774c035-' . \filesize($webroot . 'mind-blown.gif'),
         ];
 
         yield [
             'mind-blown.webp',
             'image/webp',
-            '48a97a5b92a1e34df5c7fd42e5ae1db7-' . filesize($webroot . 'mind-blown.webp'),
+            '48a97a5b92a1e34df5c7fd42e5ae1db7-' . \filesize($webroot . 'mind-blown.webp'),
         ];
     }
 
     /**
      * @dataProvider provideHits
      */
-    public function testHit(string $file, string $contentType, string $etag)
+    public function testHit(string $file, string $contentType, string $etag): void
     {
         $request = new ServerRequest('GET', 'https://example.com/' . $file);
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
@@ -172,7 +175,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
                 $contentType,
             ],
         ], $response->getHeaders());
-        self::assertSame(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR . $file), (string)$response->getBody());
+        self::assertSame(\file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR . $file), (string)$response->getBody());
     }
 
     public function provideEtagIfNoneMatch()
@@ -185,12 +188,12 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         ];
 
         yield [
-            '"0c119d1e5901e83563072eb67774c035-' . filesize($webroot . 'mind-blown.gif') . '"',
+            '"0c119d1e5901e83563072eb67774c035-' . \filesize($webroot . 'mind-blown.gif') . '"',
             304,
         ];
 
         yield [
-            '0c119d1e5901e83563072eb67774c035-' . filesize($webroot . 'mind-blown.gif'),
+            '0c119d1e5901e83563072eb67774c035-' . \filesize($webroot . 'mind-blown.gif'),
             304,
         ];
     }
@@ -200,12 +203,12 @@ final class WebrootPreloadMiddlewareTest extends TestCase
         $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
 
         yield [
-            '"0c119d1e5901e83563072eb67774c035-' . filesize($webroot . 'mind-blown.gif') . '"',
+            '"0c119d1e5901e83563072eb67774c035-' . \filesize($webroot . 'mind-blown.gif') . '"',
             200,
         ];
 
         yield [
-            '0c119d1e5901e83563072eb67774c035-' . filesize($webroot . 'mind-blown.gif'),
+            '0c119d1e5901e83563072eb67774c035-' . \filesize($webroot . 'mind-blown.gif'),
             200,
         ];
     }
@@ -213,12 +216,12 @@ final class WebrootPreloadMiddlewareTest extends TestCase
     public function provideEtagIfMatchPreconditionFails()
     {
         yield [
-            '"' . md5('FailMe') . '"',
+            '"' . \md5('FailMe') . '"',
             412,
         ];
 
         yield [
-            '"'. md5('WillNotMatch!').'"',
+            '"'. \md5('WillNotMatch!').'"',
             412,
         ];
     }
@@ -228,7 +231,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
      * @param int    $statusCode
      * @dataProvider provideEtagIfNoneMatch
      */
-    public function testEtagIfNoneMatch(string $etag, int $statusCode)
+    public function testEtagIfNoneMatch(string $etag, int $statusCode): void
     {
         $request = new ServerRequest(
             'GET',
@@ -252,7 +255,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
      * @param int    $statusCode
      * @dataProvider provideEtagIfMatchOK
      */
-    public function testEtagIfMatchOK(string $etag, int $statusCode)
+    public function testEtagIfMatchOK(string $etag, int $statusCode): void
     {
         $request = new ServerRequest(
             'DELETE',
@@ -274,7 +277,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
      * @param int    $statusCode
      * @dataProvider provideEtagIfMatchPreconditionFails
      */
-    public function testEtagIfMatchPreconditionFails(string $etag, int $statusCode)
+    public function testEtagIfMatchPreconditionFails(string $etag, int $statusCode): void
     {
         $request = new ServerRequest(
             'DELETE',
