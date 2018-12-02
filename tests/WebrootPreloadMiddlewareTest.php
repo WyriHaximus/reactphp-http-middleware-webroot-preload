@@ -49,7 +49,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
             ],
             [
                 'level' => 'debug',
-                'message' => '/favicon.ico: 5.3KiB (image/x-icon)',
+                'message' => '/favicon.ico: 5.3KiB (image/vnd.microsoft.icon)',
             ],
             [
                 'level' => 'debug',

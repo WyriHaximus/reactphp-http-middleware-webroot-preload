@@ -2,7 +2,7 @@
 
 namespace WyriHaximus\React\Http\Middleware;
 
-use Narrowspark\Mimetypes\MimeTypeByExtensionGuesser;
+use Narrowspark\MimeType\MimeTypeExtensionGuesser;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use React\Cache\ArrayCache;
@@ -53,7 +53,7 @@ final class WebrootPreloadMiddleware
             ];
             $item['etag'] = md5($item['contents']) . '-' . filesize($fileinfo->getPathname());
 
-            $mime = MimeTypeByExtensionGuesser::guess($fileinfo->getExtension());
+            $mime = MimeTypeExtensionGuesser::guess($fileinfo->getExtension());
             if (is_null($mime)) {
                 $mime = 'application/octet-stream';
             }

@@ -21,7 +21,7 @@
   {
     "url": "http://localhost:9001/favicon.ico",
     "status": 200,
-    "content-type": "image/x-icon"
+    "content-type": "image/vnd.microsoft.icon"
   },
   {
     "url": "http://localhost:9001/google.png",
