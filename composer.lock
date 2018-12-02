@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee34b6a54944e429a7cf019389662370",
+    "content-hash": "379fc6a9f4e721f6dda82694c7df34ab",
     "packages": [
         {
             "name": "evenement/evenement",
@@ -51,33 +51,32 @@
         },
         {
             "name": "narrowspark/mimetypes",
-            "version": "v0.1.5",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/narrowspark/mimetypes.git",
-                "reference": "37f52d6c10c6a7ee141d8680394be876eedd37b7"
+                "reference": "c0de347646ab2a9286b6f970dbb84bc941962c16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/narrowspark/mimetypes/zipball/37f52d6c10c6a7ee141d8680394be876eedd37b7",
-                "reference": "37f52d6c10c6a7ee141d8680394be876eedd37b7",
+                "url": "https://api.github.com/repos/narrowspark/mimetypes/zipball/c0de347646ab2a9286b6f970dbb84bc941962c16",
+                "reference": "c0de347646ab2a9286b6f970dbb84bc941962c16",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1",
-                "symfony/polyfill-mbstring": "^1.5"
+                "php": "^7.1"
             },
             "require-dev": {
                 "ext-fileinfo": "*",
-                "narrowspark/php-cs-fixer-config": "^2.1",
-                "phpstan/phpstan": "^0.9",
-                "phpstan/phpstan-phpunit": "^0.9",
-                "phpunit/phpunit": "^7.0"
+                "ext-json": "*",
+                "mindscreen/yarnlock": "^1.0.1",
+                "narrowspark/coding-standard": "^1.4.0",
+                "phpunit/phpunit": "^7.2.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Narrowspark\\Mimetypes\\": "src/"
+                    "Narrowspark\\MimeType\\": "src/"
                 },
                 "exclude-from-classmap": [
                     "tests/"
@@ -97,10 +96,12 @@
             ],
             "description": "PHP MIME Types Guesser and extension mapping.",
             "keywords": [
+                "guesser",
+                "mimetype",
                 "mimetypes",
                 "narrowspark"
             ],
-            "time": "2018-04-29T22:09:22+00:00"
+            "time": "2018-11-05T23:10:21+00:00"
         },
         {
             "name": "psr/http-message",
@@ -719,65 +720,6 @@
             ],
             "description": "Formats byte values as human-readable strings.",
             "time": "2016-01-03T23:54:33+00:00"
-        },
-        {
-            "name": "symfony/polyfill-mbstring",
-            "version": "v1.9.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d0cd638f4634c16d8df4508e847f14e9e43168b8",
-                "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "suggest": {
-                "ext-mbstring": "For best performance"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.9-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
-                "files": [
-                    "bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill for the Mbstring extension",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "mbstring",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2018-08-06T14:22:27+00:00"
         }
     ],
     "packages-dev": [
@@ -3854,6 +3796,65 @@
                 "portable"
             ],
             "time": "2018-08-06T14:22:27+00:00"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/c79c051f5b3a46be09205c73b80b346e4153e494",
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2018-09-21T13:07:52+00:00"
         },
         {
             "name": "symfony/polyfill-php70",
