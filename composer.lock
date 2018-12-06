@@ -809,19 +809,20 @@
         },
         {
             "name": "brunty/cigar",
-            "version": "1.10.0",
+            "version": "1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Brunty/cigar.git",
-                "reference": "9cfcdd65362a4b9a2fc668cc4bff91e5f53d2240"
+                "reference": "b8d82fb25eaaba5e8b7bc7927897b605adfa62e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Brunty/cigar/zipball/9cfcdd65362a4b9a2fc668cc4bff91e5f53d2240",
-                "reference": "9cfcdd65362a4b9a2fc668cc4bff91e5f53d2240",
+                "url": "https://api.github.com/repos/Brunty/cigar/zipball/b8d82fb25eaaba5e8b7bc7927897b605adfa62e9",
+                "reference": "b8d82fb25eaaba5e8b7bc7927897b605adfa62e9",
                 "shasum": ""
             },
             "require": {
+                "ext-json": "*",
                 "php": ">=7.0"
             },
             "require-dev": {
@@ -850,7 +851,7 @@
                 }
             ],
             "description": "Smoke testing tool written in PHP.",
-            "time": "2018-05-09T11:36:27+00:00"
+            "time": "2018-12-05T21:58:19+00:00"
         },
         {
             "name": "clue/block-react",
