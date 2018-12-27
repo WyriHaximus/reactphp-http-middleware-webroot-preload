@@ -37,11 +37,11 @@ final class WebrootPreloadMiddleware
             $filePath = \str_replace(
                 [
                     $webroot,
-                    DIRECTORY_SEPARATOR,
+                    \DIRECTORY_SEPARATOR,
                     '//',
                 ],
                 [
-                    DIRECTORY_SEPARATOR,
+                    \DIRECTORY_SEPARATOR,
                     '/',
                     '/',
                 ],

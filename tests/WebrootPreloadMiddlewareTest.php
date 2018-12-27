@@ -17,7 +17,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
 {
     public function testLogger(): void
     {
-        $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
+        $webroot = __DIR__ . \DIRECTORY_SEPARATOR . 'webroot' . \DIRECTORY_SEPARATOR;
         $logger = new class() extends AbstractLogger {
             private $messages = [];
 
@@ -88,7 +88,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
     public function testMiss(): void
     {
         $request = new ServerRequest('GET', 'https://example.com/');
-        $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
+        $middleware = new WebrootPreloadMiddleware(__DIR__ . \DIRECTORY_SEPARATOR . 'webroot' . \DIRECTORY_SEPARATOR);
         $next = function () {
             return new Response(200);
         };
@@ -102,7 +102,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
 
     public function provideHits()
     {
-        $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
+        $webroot = __DIR__ . \DIRECTORY_SEPARATOR . 'webroot' . \DIRECTORY_SEPARATOR;
 
         yield [
             'app.css',
@@ -159,7 +159,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
     public function testHit(string $file, string $contentType, string $etag): void
     {
         $request = new ServerRequest('GET', 'https://example.com/' . $file);
-        $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
+        $middleware = new WebrootPreloadMiddleware(__DIR__ . \DIRECTORY_SEPARATOR . 'webroot' . \DIRECTORY_SEPARATOR);
         $next = function () {
             return new Response(200);
         };
@@ -175,12 +175,12 @@ final class WebrootPreloadMiddlewareTest extends TestCase
                 $contentType,
             ],
         ], $response->getHeaders());
-        self::assertSame(\file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR . $file), (string)$response->getBody());
+        self::assertSame(\file_get_contents(__DIR__ . \DIRECTORY_SEPARATOR . 'webroot' . \DIRECTORY_SEPARATOR . $file), (string)$response->getBody());
     }
 
     public function provideEtagIfNoneMatch()
     {
-        $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
+        $webroot = __DIR__ . \DIRECTORY_SEPARATOR . 'webroot' . \DIRECTORY_SEPARATOR;
 
         yield [
             '"123"',
@@ -200,7 +200,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
 
     public function provideEtagIfMatchOK()
     {
-        $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
+        $webroot = __DIR__ . \DIRECTORY_SEPARATOR . 'webroot' . \DIRECTORY_SEPARATOR;
 
         yield [
             '"0c119d1e5901e83563072eb67774c035-' . \filesize($webroot . 'mind-blown.gif') . '"',
@@ -240,7 +240,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
                 'If-None-Match' => $etag,
             ]
         );
-        $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
+        $middleware = new WebrootPreloadMiddleware(__DIR__ . \DIRECTORY_SEPARATOR . 'webroot' . \DIRECTORY_SEPARATOR);
         $next = function () {
             return new Response(200);
         };
@@ -264,7 +264,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
                 'If-Match' => $etag,
             ]
         );
-        $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
+        $middleware = new WebrootPreloadMiddleware(__DIR__ . \DIRECTORY_SEPARATOR . 'webroot' . \DIRECTORY_SEPARATOR);
         $next = function () {
             return new Response(200);
         };
@@ -286,7 +286,7 @@ final class WebrootPreloadMiddlewareTest extends TestCase
                 'If-Match' => $etag,
             ]
         );
-        $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR);
+        $middleware = new WebrootPreloadMiddleware(__DIR__ . \DIRECTORY_SEPARATOR . 'webroot' . \DIRECTORY_SEPARATOR);
         $next = function () {
             return new Response(412);
         };
