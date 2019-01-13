@@ -8,8 +8,8 @@ use Psr\Log\LoggerInterface;
 use React\Cache\ArrayCache;
 use React\Cache\CacheInterface;
 use RingCentral\Psr7\Response;
-use ScriptFUSION\Byte\ByteFormatter;
 use function RingCentral\Psr7\stream_for;
+use ScriptFUSION\Byte\ByteFormatter;
 
 final class WebrootPreloadMiddleware
 {

@@ -7,8 +7,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\AbstractLogger;
 use React\Http\Io\ServerRequest;
 use React\Http\Response;
-use WyriHaximus\React\Http\Middleware\WebrootPreloadMiddleware;
 use function React\Promise\resolve;
+use WyriHaximus\React\Http\Middleware\WebrootPreloadMiddleware;
 
 /**
  * @internal
