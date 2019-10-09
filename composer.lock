@@ -51,16 +51,16 @@
         },
         {
             "name": "narrowspark/mimetypes",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/narrowspark/mimetypes.git",
-                "reference": "d373dd546745577f4ea37a97152c51e78c99f093"
+                "reference": "b8449fc28cbd257b4d857588e5bfaa9f1f86496e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/narrowspark/mimetypes/zipball/d373dd546745577f4ea37a97152c51e78c99f093",
-                "reference": "d373dd546745577f4ea37a97152c51e78c99f093",
+                "url": "https://api.github.com/repos/narrowspark/mimetypes/zipball/b8449fc28cbd257b4d857588e5bfaa9f1f86496e",
+                "reference": "b8449fc28cbd257b4d857588e5bfaa9f1f86496e",
                 "shasum": ""
             },
             "require": {
@@ -101,7 +101,7 @@
                 "mimetypes",
                 "narrowspark"
             ],
-            "time": "2019-09-12T08:35:06+00:00"
+            "time": "2019-10-07T21:11:53+00:00"
         },
         {
             "name": "psr/http-message",
@@ -2426,9 +2426,9 @@
             "authors": [
                 {
                     "name": "Christian Weiske",
-                    "role": "Developer",
                     "email": "cweiske@cweiske.de",
-                    "homepage": "http://github.com/cweiske/jsonmapper/"
+                    "homepage": "http://github.com/cweiske/jsonmapper/",
+                    "role": "Developer"
                 }
             ],
             "description": "Map nested JSON structures onto PHP classes",
@@ -6410,8 +6410,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
