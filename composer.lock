@@ -51,16 +51,16 @@
         },
         {
             "name": "narrowspark/mimetypes",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/narrowspark/mimetypes.git",
-                "reference": "b8449fc28cbd257b4d857588e5bfaa9f1f86496e"
+                "reference": "990cced3a92d4ffd348838338da44d547ee0c0fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/narrowspark/mimetypes/zipball/b8449fc28cbd257b4d857588e5bfaa9f1f86496e",
-                "reference": "b8449fc28cbd257b4d857588e5bfaa9f1f86496e",
+                "url": "https://api.github.com/repos/narrowspark/mimetypes/zipball/990cced3a92d4ffd348838338da44d547ee0c0fd",
+                "reference": "990cced3a92d4ffd348838338da44d547ee0c0fd",
                 "shasum": ""
             },
             "require": {
@@ -101,7 +101,7 @@
                 "mimetypes",
                 "narrowspark"
             ],
-            "time": "2019-10-07T21:11:53+00:00"
+            "time": "2020-01-06T20:43:25+00:00"
         },
         {
             "name": "psr/http-message",
@@ -2122,6 +2122,7 @@
                 "json",
                 "normalizer"
             ],
+            "abandoned": "ergebnis/composer-json-normalizer",
             "time": "2019-01-09T14:43:16+00:00"
         },
         {
@@ -2187,6 +2188,7 @@
                 "normalizer",
                 "plugin"
             ],
+            "abandoned": "ergebnis/composer-normalize",
             "time": "2019-06-01T17:47:26+00:00"
         },
         {
@@ -2239,6 +2241,7 @@
                 "json",
                 "normalizer"
             ],
+            "abandoned": "ergebnis/json-normalizer",
             "time": "2018-10-07T17:36:39+00:00"
         },
         {
@@ -2288,6 +2291,7 @@
                 "json",
                 "printer"
             ],
+            "abandoned": "ergebnis/json-printer",
             "time": "2018-08-11T23:54:50+00:00"
         },
         {
@@ -2341,6 +2345,7 @@
                 "phpstan-extreme-rules",
                 "phpstan-rules"
             ],
+            "abandoned": "ergebnis/phpstan-rules",
             "time": "2019-01-17T22:24:11+00:00"
         },
         {
