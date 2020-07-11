@@ -23,8 +23,8 @@ files containing passwords etc etc should be in there.
 
 ```php
 $webroot = '/var/www/';
-$logger = new Psr3Logger(); // Optional, PSR-3 logger for bootstrap logging
-$cache = new ArrayCache();  // Optional, custom cache configuration
+$logger = new Psr3Logger(); // Require, PSR-3 logger for bootstrap logging
+$cache = new ArrayCache();  // Required, custom cache configuration
 $server = new Server([
     /** Other middleware */
     new WebrootPreloadMiddleware($webroot, $logger, $cache),
