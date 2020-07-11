@@ -1,0 +1,21 @@
+{
+  "symbol-whitelist" : [
+    "null", "true", "false",
+    "static", "self", "parent",
+    "array", "string", "int", "float", "bool", "iterable", "callable", "void", "object",
+    "Safe\\filesize", "Safe\\file_get_contents", "Safe\\usort", "WyriHaximus\\Constants\\Boolean\\FALSE_",
+    "WyriHaximus\\Constants\\HTTPStatusCodes\\NOT_MODIFIED", "WyriHaximus\\Constants\\HTTPStatusCodes\\OK",
+    "WyriHaximus\\Constants\\HTTPStatusCodes\\PRECONDITION_FAILED", "WyriHaximus\\Constants\\Numeric\\TWO",
+    "WyriHaximus\\Constants\\Numeric\\ZERO"
+  ],
+  "php-core-extensions" : [
+    "Core",
+    "date",
+    "pcre",
+    "Phar",
+    "Reflection",
+    "SPL",
+    "standard"
+  ],
+  "scan-files" : []
+}

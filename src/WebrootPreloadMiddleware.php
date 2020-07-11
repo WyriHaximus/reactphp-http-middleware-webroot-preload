@@ -1,113 +1,130 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace WyriHaximus\React\Http\Middleware;
 
+use Ancarda\Psr7\StringStream\ReadOnlyStringStream;
 use Narrowspark\MimeType\MimeTypeExtensionGuesser;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
-use React\Cache\ArrayCache;
+use Psr\Log\NullLogger;
 use React\Cache\CacheInterface;
-use RingCentral\Psr7\Response;
-use function RingCentral\Psr7\stream_for;
+use React\Http\Message\Response;
+use React\Promise\PromiseInterface;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use ScriptFUSION\Byte\ByteFormatter;
+use SplFileInfo;
+
+use function current;
+use function explode;
+use function iterator_to_array;
+use function md5;
+use function Safe\file_get_contents;
+use function Safe\filesize;
+use function Safe\usort;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function trim;
+
+use const DIRECTORY_SEPARATOR;
+use const WyriHaximus\Constants\Boolean\FALSE_;
+use const WyriHaximus\Constants\HTTPStatusCodes\NOT_MODIFIED;
+use const WyriHaximus\Constants\HTTPStatusCodes\OK;
+use const WyriHaximus\Constants\HTTPStatusCodes\PRECONDITION_FAILED;
+use const WyriHaximus\Constants\Numeric\TWO;
+use const WyriHaximus\Constants\Numeric\ZERO;
 
 final class WebrootPreloadMiddleware
 {
-    /** @var CacheInterface */
-    private $cache;
+    private CacheInterface $cache;
 
-    public function __construct(string $webroot, LoggerInterface $logger = null, CacheInterface $cache = null)
+    public function __construct(string $webroot, LoggerInterface $logger, CacheInterface $cache)
     {
-        $this->cache = $cache ?? new ArrayCache();
+        $this->cache = $cache;
 
-        $totalSize = 0;
-        $count = 0;
-        $byteFormatter = (new ByteFormatter())->setPrecision(2)->setFormat('%v%u');
-        $directory = new \RecursiveDirectoryIterator($webroot);
-        $directory = new \RecursiveIteratorIterator($directory);
-        $directory = \iterator_to_array($directory);
-        \usort($directory, function ($a, $b) {
-            return $a->getPathname() <=> $b->getPathname();
-        });
+        $totalSize     = ZERO;
+        $count         = ZERO;
+        $byteFormatter = (new ByteFormatter())->setPrecision(TWO)->setFormat('%v%u');
+        $directory     = new RecursiveDirectoryIterator($webroot);
+        $directory     = new RecursiveIteratorIterator($directory);
+        $directory     = iterator_to_array($directory);
+        usort($directory, static fn (SplFileInfo $a, SplFileInfo $b): int => $a->getPathname() <=> $b->getPathname());
         foreach ($directory as $fileinfo) {
-            if (!$fileinfo->isFile()) {
+            if (! $fileinfo->isFile()) {
                 continue;
             }
 
-            $filePath = \str_replace(
-                [
-                    $webroot,
-                    \DIRECTORY_SEPARATOR,
-                    '//',
-                ],
-                [
-                    \DIRECTORY_SEPARATOR,
-                    '/',
-                    '/',
-                ],
-                $fileinfo->getPathname()
-            );
+            $filePath = str_replace([$webroot, DIRECTORY_SEPARATOR, '//'], [DIRECTORY_SEPARATOR, '/', '/'], $fileinfo->getPathname());
 
-            $item = [
-                'contents' => \file_get_contents($fileinfo->getPathname()),
+            $item         = [
+                'contents' => file_get_contents($fileinfo->getPathname()),
             ];
-            $item['etag'] = \md5($item['contents']) . '-' . \filesize($fileinfo->getPathname());
+            $item['etag'] = md5($item['contents']) . '-' . filesize($fileinfo->getPathname());
 
             $mime = MimeTypeExtensionGuesser::guess($fileinfo->getExtension());
-            if (\is_null($mime)) {
+            if ($mime === null) {
                 $mime = 'application/octet-stream';
             }
-            list($mime) = \explode(';', $mime);
-            if (\strpos($mime, '/') !== false) {
+
+            $item['mime'] = 'application/octet-stream';
+            [$mime]       = explode(';', $mime);
+            if (strpos($mime, '/') !== FALSE_) {
                 $item['mime'] = $mime;
             }
 
             $this->cache->set($filePath, $item);
             $count++;
-            if ($logger instanceof LoggerInterface) {
-                $fileSize = \strlen($item['contents']);
-                $totalSize += $fileSize;
-                $logger->debug($filePath . ': ' . $byteFormatter->format($fileSize) . ' (' . $item['mime'] . ')');
+            if ($logger instanceof NullLogger) {
+                continue;
             }
+
+            $fileSize   = strlen($item['contents']);
+            $totalSize += $fileSize;
+            $logger->debug($filePath . ': ' . $byteFormatter->format($fileSize) . ' (' . $item['mime'] . ')');
         }
 
-        if ($logger instanceof LoggerInterface) {
-            $logger->info('Preloaded ' . $count . ' file(s) with a combined size of ' . $byteFormatter->format($totalSize) . ' from "' . $webroot . '" into memory');
+        if ($logger instanceof NullLogger) {
+            return;
         }
+
+        $logger->info('Preloaded ' . $count . ' file(s) with a combined size of ' . $byteFormatter->format($totalSize) . ' from "' . $webroot . '" into memory');
     }
 
-    public function __invoke(ServerRequestInterface $request, callable $next)
+    public function __invoke(ServerRequestInterface $request, callable $next): PromiseInterface
     {
         $path = $request->getUri()->getPath();
 
-        return $this->cache->get($path)->then(function ($item) use ($next, $request) {
+        /**
+         * @psalm-suppress MissingClosureReturnType
+         * @psalm-suppress MissingClosureParamType
+         */
+        return $this->cache->get($path)->then(static function ($item) use ($next, $request) {
             if ($item === null) {
                 return $next($request);
             }
 
             if ($request->hasHeader('If-None-Match')) {
-                $etag = \current($request->getHeader('If-None-Match'));
-                $etag = \trim($etag, '"');
+                $etag = current($request->getHeader('If-None-Match'));
+                $etag = trim($etag, '"');
                 if ($etag === $item['etag']) {
-                    return new Response(304);
+                    return new Response(NOT_MODIFIED);
                 }
             }
 
             if ($request->hasHeader('If-Match')) {
-                $expectedEtag = \current($request->getHeader('If-Match'));
-                $expectedEtag = \trim($expectedEtag, '"');
+                $expectedEtag = current($request->getHeader('If-Match'));
+                $expectedEtag = trim($expectedEtag, '"');
                 if ($expectedEtag !== $item['etag']) {
-                    return new Response(412);
+                    return new Response(PRECONDITION_FAILED);
                 }
             }
 
-            $response = (new Response(200))->
-                withBody(stream_for($item['contents']))->
-                withHeader('ETag', '"' . $item['etag'] . '"')
-            ;
-            if (!isset($item['mime'])) {
-                return $response;
-            }
+            $response = (new Response(OK))->
+                withBody(new ReadOnlyStringStream($item['contents']))->
+                withHeader('ETag', '"' . $item['etag'] . '"');
 
             return $response->withHeader('Content-Type', $item['mime']);
         });

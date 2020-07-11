@@ -1,0 +1,10 @@
+parameters:
+	excludes_analyse:
+		- tests/bootstrap.php
+	ergebnis:
+		classesAllowedToBeExtended:
+			- Psr\Log\AbstractLogger
+			- WyriHaximus\AsyncTestUtilities\AsyncTestCase
+
+includes:
+	- vendor/wyrihaximus/async-test-utilities/rules.neon
