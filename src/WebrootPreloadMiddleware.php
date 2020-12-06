@@ -19,6 +19,7 @@ use SplFileInfo;
 
 use function current;
 use function explode;
+use function is_string;
 use function iterator_to_array;
 use function md5;
 use function Safe\file_get_contents;
@@ -108,17 +109,21 @@ final class WebrootPreloadMiddleware
 
             if ($request->hasHeader('If-None-Match')) {
                 $etag = current($request->getHeader('If-None-Match'));
-                $etag = trim($etag, '"');
-                if ($etag === $item['etag']) {
-                    return new Response(NOT_MODIFIED);
+                if (is_string($etag)) {
+                    $etag = trim($etag, '"');
+                    if ($etag === $item['etag']) {
+                        return new Response(NOT_MODIFIED);
+                    }
                 }
             }
 
             if ($request->hasHeader('If-Match')) {
                 $expectedEtag = current($request->getHeader('If-Match'));
-                $expectedEtag = trim($expectedEtag, '"');
-                if ($expectedEtag !== $item['etag']) {
-                    return new Response(PRECONDITION_FAILED);
+                if (is_string($expectedEtag)) {
+                    $expectedEtag = trim($expectedEtag, '"');
+                    if ($expectedEtag !== $item['etag']) {
+                        return new Response(PRECONDITION_FAILED);
+                    }
                 }
             }
 
