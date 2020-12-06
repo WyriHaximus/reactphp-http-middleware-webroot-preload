@@ -3,21 +3,44 @@ on:
   push:
   pull_request:
 jobs:
+  generate-versions-strategy:
+    name: Generate Versions
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.generate-versions-strategy.outputs.version }}
+    steps:
+      - uses: actions/checkout@v1
+      - id: generate-versions-strategy
+        uses: WyriHaximus/github-action-composer-php-versions-in-range@main
+  generate-checks-strategy:
+    name: Generate Checks
+    runs-on: ubuntu-latest
+    outputs:
+      check: ${{ steps.generate-checks-strategy.outputs.check }}
+    steps:
+      - uses: actions/checkout@v1
+      - id: generate-checks-strategy
+        name: Generate check
+        run: |
+          printf "Checks found: %s\r\n" $(make task-list-ci)
+          printf "::set-output name=check::%s" $(make task-list-ci)
   lint:
-   runs-on: ubuntu-latest
-   steps:
-     - name: Lint Code Base
-       uses: docker://github/super-linter:v2.2.0
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint Code Base
+        uses: docker://github/super-linter:v2.2.0
   composer-install:
     strategy:
       fail-fast: false
       matrix:
-        php: [7.4]
+        php: ${{ fromJson(needs.generate-versions-strategy.outputs.version) }}
         composer: [lowest, current, highest]
-    needs: lint
+    needs:
+      - lint
+      - generate-versions-strategy
     runs-on: ubuntu-latest
     container:
-      image: wyrihaximusnet/php:${{ matrix.php }}-zts-alpine3.11-dev-root
+      image: ghcr.io/wyrihaximusnet/php:${{ matrix.php }}-nts-buster-dev-root
     steps:
       - uses: actions/checkout@v1
       - name: Cache composer packages
@@ -38,13 +61,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [7.4]
+        php: ${{ fromJson(needs.generate-versions-strategy.outputs.version) }}
         composer: [lowest, current, highest]
-        qa: [lint, cs, stan, psalm, unit-ci, infection, composer-require-checker, composer-unused, backward-compatibility-check]
-    needs: composer-install
+        check: ${{ fromJson(needs.generate-checks-strategy.outputs.check) }}
+    needs:
+      - composer-install
+      - generate-checks-strategy
+      - generate-versions-strategy
     runs-on: ubuntu-latest
     container:
-      image: wyrihaximusnet/php:${{ matrix.php }}-zts-alpine3.11-dev-root
+      image: ghcr.io/wyrihaximusnet/php:${{ matrix.php }}-nts-buster-dev-root
     steps:
       - uses: actions/checkout@v1
       - name: Cache composer packages
@@ -62,6 +88,9 @@ jobs:
         run: (test -f vendor && true ) || composer update --ansi --no-progress --no-interaction --prefer-dist -o
         if: matrix.composer == 'highest'
       - name: Fetch Tags
-        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-        if: matrix.qa == 'backward-compatibility-check'
-      - run: make ${{ matrix.qa }}
+        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/* || true
+        if: matrix.check == 'backward-compatibility-check'
+      - run: make ${{ matrix.check }}
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          COVERALLS_RUN_LOCALLY: ${{ secrets.COVERALLS_RUN_LOCALLY }}

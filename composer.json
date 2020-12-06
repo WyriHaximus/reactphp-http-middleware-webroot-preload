@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "brunty/cigar": "^1.12",
-        "wyrihaximus/async-test-utilities": "^2.2"
+        "wyrihaximus/async-test-utilities": "^3.3"
     },
     "config": {
         "platform": {
