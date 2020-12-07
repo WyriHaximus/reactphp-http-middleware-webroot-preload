@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "9dc0b30676fe8bb9b0dd9631179d7d7b",
-=======
-    "content-hash": "e42f3095c737c9b2d79bd4ca048582bb",
->>>>>>> 258f271 (Add support to php 8.0)
+    "content-hash": "c7ec6497555056a4bf7132383f12eb0f",
     "packages": [
         {
             "name": "ancarda/psr7-string-stream",
@@ -3067,7 +3063,6 @@
         },
         {
             "name": "infection/infection",
-<<<<<<< HEAD
             "version": "0.20.2",
             "source": {
                 "type": "git",
@@ -3078,22 +3073,9 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/infection/infection/zipball/6035c1566af6a5a8d833a276351e5e18ed412305",
                 "reference": "6035c1566af6a5a8d833a276351e5e18ed412305",
-=======
-            "version": "0.18",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/infection/infection.git",
-                "reference": "ddea14cf710fe3ce041f26ea0e7365e49263bdff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/infection/infection/zipball/ddea14cf710fe3ce041f26ea0e7365e49263bdff",
-                "reference": "ddea14cf710fe3ce041f26ea0e7365e49263bdff",
->>>>>>> 258f271 (Add support to php 8.0)
                 "shasum": ""
             },
             "require": {
-                "composer/package-versions-deprecated": "^1.2 || ^2.0",
                 "composer/xdebug-handler": "^1.3.3",
                 "ext-dom": "*",
                 "ext-json": "*",
@@ -3102,16 +3084,10 @@
                 "infection/extension-installer": "^0.1.0",
                 "infection/include-interceptor": "^0.2.4",
                 "justinrainbow/json-schema": "^5.2",
-<<<<<<< HEAD
                 "nikic/php-parser": "^4.10.2",
                 "ocramius/package-versions": "^1.2 || ^2.0",
                 "ondram/ci-detector": "^3.3.0",
                 "php": "^7.4 || ^8.0",
-=======
-                "nikic/php-parser": "^4.9 <4.10",
-                "ondram/ci-detector": "^3.3.0",
-                "php": "^7.3",
->>>>>>> 258f271 (Add support to php 8.0)
                 "sanmai/pipeline": "^3.1 || ^5.0",
                 "sebastian/diff": "^3.0.2 || ^4.0",
                 "seld/jsonlint": "^1.7",
@@ -3196,15 +3172,9 @@
             ],
             "support": {
                 "issues": "https://github.com/infection/infection/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/infection/infection/tree/0.20.2"
             },
             "time": "2020-11-20T17:15:57+00:00"
-=======
-                "source": "https://github.com/infection/infection/tree/0.18"
-            },
-            "time": "2020-10-17T10:55:12+00:00"
->>>>>>> 258f271 (Add support to php 8.0)
         },
         {
             "name": "jangregor/phpstan-prophecy",
@@ -3634,7 +3604,6 @@
         },
         {
             "name": "nikic/php-parser",
-<<<<<<< HEAD
             "version": "v4.10.3",
             "source": {
                 "type": "git",
@@ -3645,18 +3614,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/dbe56d23de8fcb157bbc0cfb3ad7c7de0cfb0984",
                 "reference": "dbe56d23de8fcb157bbc0cfb3ad7c7de0cfb0984",
-=======
-            "version": "v4.9.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "88e519766fc58bd46b8265561fb79b54e2e00b28"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/88e519766fc58bd46b8265561fb79b54e2e00b28",
-                "reference": "88e519766fc58bd46b8265561fb79b54e2e00b28",
->>>>>>> 258f271 (Add support to php 8.0)
                 "shasum": ""
             },
             "require": {
@@ -3697,15 +3654,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/nikic/PHP-Parser/tree/v4.10.3"
             },
             "time": "2020-12-03T17:45:45+00:00"
-=======
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.9.1"
-            },
-            "time": "2020-08-30T16:15:20+00:00"
->>>>>>> 258f271 (Add support to php 8.0)
         },
         {
             "name": "nikolaposa/version",
@@ -4194,83 +4145,10 @@
             ],
             "authors": [
                 {
-<<<<<<< HEAD
-                    "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Sebastian Heuer",
-                    "email": "sebastian@phpeople.de",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Library for handling version information and constraints",
-            "support": {
-                "issues": "https://github.com/phar-io/version/issues",
-                "source": "https://github.com/phar-io/version/tree/3.0.3"
-            },
-            "time": "2020-11-30T09:21:21+00:00"
-        },
-        {
-            "name": "php-coveralls/php-coveralls",
-            "version": "v2.4.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-coveralls/php-coveralls.git",
-                "reference": "8a33ae229da63a0bd22dadae1512af663ce5e559"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-coveralls/php-coveralls/zipball/8a33ae229da63a0bd22dadae1512af663ce5e559",
-                "reference": "8a33ae229da63a0bd22dadae1512af663ce5e559",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "ext-simplexml": "*",
-                "guzzlehttp/guzzle": "^6.0 || ^7.0",
-                "php": "^5.5 || ^7.0 || ^8.0",
-                "psr/log": "^1.0",
-                "symfony/config": "^2.1 || ^3.0 || ^4.0 || ^5.0",
-                "symfony/console": "^2.1 || ^3.0 || ^4.0 || ^5.0",
-                "symfony/stopwatch": "^2.0 || ^3.0 || ^4.0 || ^5.0",
-                "symfony/yaml": "^2.0.5 || ^3.0 || ^4.0 || ^5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8.35 || ^5.4.3 || ^6.0 || ^7.0 || ^8.0 || ^9.0",
-                "sanmai/phpunit-legacy-adapter": "^6.1 || ^8.0"
-            },
-            "suggest": {
-                "symfony/http-kernel": "Allows Symfony integration"
-            },
-            "bin": [
-                "bin/php-coveralls"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PhpCoveralls\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-=======
->>>>>>> 258f271 (Add support to php 8.0)
                     "name": "Kitamura Satoshi",
                     "email": "with.no.parachute@gmail.com",
                     "homepage": "https://www.facebook.com/satooshi.jp",
                     "role": "Original creator"
-<<<<<<< HEAD
                 },
                 {
                     "name": "Takashi Matsuo",
@@ -4285,22 +4163,6 @@
                     "homepage": "https://github.com/keradus"
                 },
                 {
-=======
-                },
-                {
-                    "name": "Takashi Matsuo",
-                    "email": "tmatsuo@google.com"
-                },
-                {
-                    "name": "Google Inc"
-                },
-                {
-                    "name": "Dariusz Ruminski",
-                    "email": "dariusz.ruminski@gmail.com",
-                    "homepage": "https://github.com/keradus"
-                },
-                {
->>>>>>> 258f271 (Add support to php 8.0)
                     "name": "Contributors",
                     "homepage": "https://github.com/php-coveralls/php-coveralls/graphs/contributors"
                 }
@@ -4810,16 +4672,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.58",
+            "version": "0.12.59",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "2a4847df6047b30af28854ed9dc95304cdb56ae5"
+                "reference": "cf4107257c8ca2ad967efdd6a00f12b21acbb779"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2a4847df6047b30af28854ed9dc95304cdb56ae5",
-                "reference": "2a4847df6047b30af28854ed9dc95304cdb56ae5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cf4107257c8ca2ad967efdd6a00f12b21acbb779",
+                "reference": "cf4107257c8ca2ad967efdd6a00f12b21acbb779",
                 "shasum": ""
             },
             "require": {
@@ -4850,7 +4712,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.58"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.59"
             },
             "funding": [
                 {
@@ -4866,7 +4728,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-29T13:32:03+00:00"
+            "time": "2020-12-07T14:46:03+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -5096,7 +4958,6 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-<<<<<<< HEAD
             "version": "9.2.5",
             "source": {
                 "type": "git",
@@ -5107,40 +4968,20 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/f3e026641cc91909d421802dd3ac7827ebfd97e1",
                 "reference": "f3e026641cc91909d421802dd3ac7827ebfd97e1",
-=======
-            "version": "9.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "229099d7d69fe5044f6e464f669b1fd34f252e8d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/229099d7d69fe5044f6e464f669b1fd34f252e8d",
-                "reference": "229099d7d69fe5044f6e464f669b1fd34f252e8d",
->>>>>>> 258f271 (Add support to php 8.0)
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-xmlwriter": "*",
-<<<<<<< HEAD
                 "nikic/php-parser": "^4.10.2",
-=======
-                "nikic/php-parser": "^4.8",
->>>>>>> 258f271 (Add support to php 8.0)
                 "php": ">=7.3",
                 "phpunit/php-file-iterator": "^3.0.3",
                 "phpunit/php-text-template": "^2.0.2",
                 "sebastian/code-unit-reverse-lookup": "^2.0.2",
                 "sebastian/complexity": "^2.0",
                 "sebastian/environment": "^5.1.2",
-<<<<<<< HEAD
                 "sebastian/lines-of-code": "^1.0.3",
-=======
-                "sebastian/lines-of-code": "^1.0",
->>>>>>> 258f271 (Add support to php 8.0)
                 "sebastian/version": "^3.0.1",
                 "theseer/tokenizer": "^1.2.0"
             },
@@ -5182,11 +5023,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.5"
-=======
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.2"
->>>>>>> 258f271 (Add support to php 8.0)
             },
             "funding": [
                 {
@@ -5194,11 +5031,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
             "time": "2020-11-28T06:44:49+00:00"
-=======
-            "time": "2020-10-28T06:24:13+00:00"
->>>>>>> 258f271 (Add support to php 8.0)
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -5443,7 +5276,6 @@
         },
         {
             "name": "phpunit/phpunit",
-<<<<<<< HEAD
             "version": "9.5.0",
             "source": {
                 "type": "git",
@@ -5454,18 +5286,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8e16c225d57c3d6808014df6b1dd7598d0a5bbbe",
                 "reference": "8e16c225d57c3d6808014df6b1dd7598d0a5bbbe",
-=======
-            "version": "9.4.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "6535e637961f0829832621dc1b7308c2d24a799e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6535e637961f0829832621dc1b7308c2d24a799e",
-                "reference": "6535e637961f0829832621dc1b7308c2d24a799e",
->>>>>>> 258f271 (Add support to php 8.0)
                 "shasum": ""
             },
             "require": {
@@ -5481,11 +5301,7 @@
                 "phar-io/version": "^3.0.2",
                 "php": ">=7.3",
                 "phpspec/prophecy": "^1.12.1",
-<<<<<<< HEAD
                 "phpunit/php-code-coverage": "^9.2.3",
-=======
-                "phpunit/php-code-coverage": "^9.2",
->>>>>>> 258f271 (Add support to php 8.0)
                 "phpunit/php-file-iterator": "^3.0.5",
                 "phpunit/php-invoker": "^3.1.1",
                 "phpunit/php-text-template": "^2.0.3",
@@ -5516,11 +5332,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
                     "dev-master": "9.5-dev"
-=======
-                    "dev-master": "9.4-dev"
->>>>>>> 258f271 (Add support to php 8.0)
                 }
             },
             "autoload": {
@@ -5551,11 +5363,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.0"
-=======
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.4.4"
->>>>>>> 258f271 (Add support to php 8.0)
             },
             "funding": [
                 {
@@ -5567,7 +5375,6 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
             "time": "2020-12-04T05:05:53+00:00"
         },
         {
@@ -5582,37 +5389,15 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/e006914489f3e445f5cb786ea6f3df89ea30129b",
                 "reference": "e006914489f3e445f5cb786ea6f3df89ea30129b",
-=======
-            "time": "2020-12-01T04:58:47+00:00"
-        },
-        {
-            "name": "psalm/plugin-phpunit",
-            "version": "0.12.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/psalm/psalm-plugin-phpunit.git",
-                "reference": "85ee5a080a5281e63085d933b30a06b1b1680758"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/85ee5a080a5281e63085d933b30a06b1b1680758",
-                "reference": "85ee5a080a5281e63085d933b30a06b1b1680758",
->>>>>>> 258f271 (Add support to php 8.0)
                 "shasum": ""
             },
             "require": {
                 "composer/package-versions-deprecated": "^1.10",
                 "composer/semver": "^1.4 || ^2.0 || ^3.0",
                 "ext-simplexml": "*",
-<<<<<<< HEAD
                 "php": "^7.3 || ^8.0",
                 "phpunit/phpunit": "^7.5 || ^8.0 || ^9.0",
                 "vimeo/psalm": "dev-master || dev-4.x || ^4.0"
-=======
-                "php": "^7.1.3 || ^8.0",
-                "phpunit/phpunit": "^7.5 || ^8.0 || ^9.0",
-                "vimeo/psalm": "^3.6.2 || dev-master || dev-4.x"
->>>>>>> 258f271 (Add support to php 8.0)
             },
             "require-dev": {
                 "codeception/codeception": "^4.0.3",
@@ -5644,15 +5429,9 @@
             "description": "Psalm plugin for PHPUnit",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-phpunit/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.13.0"
             },
             "time": "2020-10-19T12:43:17+00:00"
-=======
-                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.12.2"
-            },
-            "time": "2020-09-28T17:25:39+00:00"
->>>>>>> 258f271 (Add support to php 8.0)
         },
         {
             "name": "psr/container",
@@ -5946,7 +5725,6 @@
         },
         {
             "name": "roave/infection-static-analysis-plugin",
-<<<<<<< HEAD
             "version": "1.6.0",
             "source": {
                 "type": "git",
@@ -5968,29 +5746,6 @@
             "require-dev": {
                 "doctrine/coding-standard": "^8.2.0",
                 "phpunit/phpunit": "^9.4.3"
-=======
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Roave/infection-static-analysis-plugin.git",
-                "reference": "74415f4c890daef9bc23a0af37e3a4ab8e0809a5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Roave/infection-static-analysis-plugin/zipball/74415f4c890daef9bc23a0af37e3a4ab8e0809a5",
-                "reference": "74415f4c890daef9bc23a0af37e3a4ab8e0809a5",
-                "shasum": ""
-            },
-            "require": {
-                "infection/infection": "0.18",
-                "ocramius/package-versions": "^1.9.0 || ^2.0.0",
-                "php": "^7.4.7",
-                "vimeo/psalm": "^3.16"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^8.1.0",
-                "phpunit/phpunit": "^9.2.6"
->>>>>>> 258f271 (Add support to php 8.0)
             },
             "bin": [
                 "bin/roave-infection-static-analysis-plugin"
@@ -6014,15 +5769,9 @@
             "description": "Static analysis on top of mutation testing - prevents escaped mutants from being invalid according to static analysis",
             "support": {
                 "issues": "https://github.com/Roave/infection-static-analysis-plugin/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/Roave/infection-static-analysis-plugin/tree/1.6.0"
             },
             "time": "2020-11-27T23:23:33+00:00"
-=======
-                "source": "https://github.com/Roave/infection-static-analysis-plugin/tree/1.1.0"
-            },
-            "time": "2020-10-18T18:37:29+00:00"
->>>>>>> 258f271 (Add support to php 8.0)
         },
         {
             "name": "roave/signature",
@@ -8836,7 +8585,6 @@
         },
         {
             "name": "vimeo/psalm",
-<<<<<<< HEAD
             "version": "4.3.1",
             "source": {
                 "type": "git",
@@ -8847,18 +8595,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/vimeo/psalm/zipball/2feba22a005a18bf31d4c7b9bdb9252c73897476",
                 "reference": "2feba22a005a18bf31d4c7b9bdb9252c73897476",
-=======
-            "version": "3.18.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vimeo/psalm.git",
-                "reference": "19aa905f7c3c7350569999a93c40ae91ae4e1626"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/19aa905f7c3c7350569999a93c40ae91ae4e1626",
-                "reference": "19aa905f7c3c7350569999a93c40ae91ae4e1626",
->>>>>>> 258f271 (Add support to php 8.0)
                 "shasum": ""
             },
             "require": {
@@ -8877,11 +8613,7 @@
                 "felixfbecker/advanced-json-rpc": "^3.0.3",
                 "felixfbecker/language-server-protocol": "^1.4",
                 "netresearch/jsonmapper": "^1.0 || ^2.0 || ^3.0",
-<<<<<<< HEAD
                 "nikic/php-parser": "^4.10.1",
-=======
-                "nikic/php-parser": "4.3.* || 4.4.* || 4.5.* || 4.6.* || ^4.8",
->>>>>>> 258f271 (Add support to php 8.0)
                 "openlss/lib-array2xml": "^1.0",
                 "php": "^7.1|^8",
                 "sebastian/diff": "^3.0 || ^4.0",
@@ -8896,20 +8628,12 @@
                 "bamarni/composer-bin-plugin": "^1.2",
                 "brianium/paratest": "^4.0.0",
                 "ext-curl": "*",
-<<<<<<< HEAD
                 "php": "^7.3|^8",
                 "phpdocumentor/reflection-docblock": "^5",
                 "phpmyadmin/sql-parser": "5.1.0",
                 "phpspec/prophecy": ">=1.9.0",
                 "phpunit/phpunit": "^9.0",
                 "psalm/plugin-phpunit": "^0.13",
-=======
-                "phpdocumentor/reflection-docblock": "^4.3.4 || ^5",
-                "phpmyadmin/sql-parser": "5.1.0",
-                "phpspec/prophecy": ">=1.9.0",
-                "phpunit/phpunit": "^7.5.16 || ^8.5 || ^9.0",
-                "psalm/plugin-phpunit": "^0.11",
->>>>>>> 258f271 (Add support to php 8.0)
                 "slevomat/coding-standard": "^5.0",
                 "squizlabs/php_codesniffer": "^3.5",
                 "symfony/process": "^4.3",
@@ -8960,15 +8684,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vimeo/psalm/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/vimeo/psalm/tree/4.3.1"
             },
             "time": "2020-12-03T16:44:10+00:00"
-=======
-                "source": "https://github.com/vimeo/psalm/tree/3.18.2"
-            },
-            "time": "2020-10-20T13:48:22+00:00"
->>>>>>> 258f271 (Add support to php 8.0)
         },
         {
             "name": "webmozart/assert",
@@ -9126,7 +8844,6 @@
         },
         {
             "name": "wyrihaximus/async-test-utilities",
-<<<<<<< HEAD
             "version": "3.3.1",
             "source": {
                 "type": "git",
@@ -9137,35 +8854,15 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/WyriHaximus/php-async-test-utilities/zipball/bdc235a60c36502bb7f83565fdd75fe2379e9c3f",
                 "reference": "bdc235a60c36502bb7f83565fdd75fe2379e9c3f",
-=======
-            "version": "2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/WyriHaximus/php-async-test-utilities.git",
-                "reference": "eeab6421f10d3139e3a22fe4970207e2320a2739"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/WyriHaximus/php-async-test-utilities/zipball/eeab6421f10d3139e3a22fe4970207e2320a2739",
-                "reference": "eeab6421f10d3139e3a22fe4970207e2320a2739",
->>>>>>> 258f271 (Add support to php 8.0)
                 "shasum": ""
             },
             "require": {
                 "clue/block-react": "^1.4",
-<<<<<<< HEAD
                 "php": "^8 || ^7.4",
                 "phpunit/phpunit": "^9.4",
                 "react/event-loop": "^1.1",
                 "react/promise": "^2.8",
                 "wyrihaximus/test-utilities": "^3.3.1"
-=======
-                "php": "^7.4",
-                "phpunit/phpunit": "^9.4",
-                "react/event-loop": "^1.1",
-                "react/promise": "^2.8",
-                "wyrihaximus/test-utilities": "^2.9"
->>>>>>> 258f271 (Add support to php 8.0)
             },
             "require-dev": {
                 "wyrihaximus/iterator-or-array-to-array": "^1.1"
@@ -9189,11 +8886,7 @@
             "description": "Test utilities for api-clients packages",
             "support": {
                 "issues": "https://github.com/WyriHaximus/php-async-test-utilities/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/WyriHaximus/php-async-test-utilities/tree/3.3.1"
-=======
-                "source": "https://github.com/WyriHaximus/php-async-test-utilities/tree/2.4.0"
->>>>>>> 258f271 (Add support to php 8.0)
             },
             "funding": [
                 {
@@ -9201,11 +8894,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
             "time": "2020-11-25T09:57:56+00:00"
-=======
-            "time": "2020-10-30T10:37:52+00:00"
->>>>>>> 258f271 (Add support to php 8.0)
         },
         {
             "name": "wyrihaximus/coding-standard",
@@ -9291,7 +8980,6 @@
         },
         {
             "name": "wyrihaximus/test-utilities",
-<<<<<<< HEAD
             "version": "3.3.1",
             "source": {
                 "type": "git",
@@ -9330,46 +9018,6 @@
             },
             "conflict": {
                 "beberlei/assert": ">= 3.3"
-=======
-            "version": "2.9.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/WyriHaximus/php-test-utilities.git",
-                "reference": "456bf8c4651b9219add9de3238f3edd02f09593a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/WyriHaximus/php-test-utilities/zipball/456bf8c4651b9219add9de3238f3edd02f09593a",
-                "reference": "456bf8c4651b9219add9de3238f3edd02f09593a",
-                "shasum": ""
-            },
-            "require": {
-                "composer/composer": "^1.8",
-                "ergebnis/composer-normalize": "^2.0",
-                "icanhazstring/composer-unused": "^0.7",
-                "infection/infection": "^0.18",
-                "maglnet/composer-require-checker": "^2.0",
-                "nunomaduro/collision": "^4.0 || ^3.0 || ^5.0",
-                "php": "^7.4",
-                "php-coveralls/php-coveralls": "^2.2",
-                "php-parallel-lint/php-console-highlighter": "^0.4.0 || ^0.5",
-                "php-parallel-lint/php-parallel-lint": "^1.1",
-                "phpspec/prophecy": "^1.10",
-                "phpspec/prophecy-phpunit": "^2.0",
-                "phpstan/phpstan": "^0.12.42",
-                "phpunit/phpunit": "^9.1",
-                "psalm/plugin-phpunit": "^0.9 || ^0.10 || ^0.12",
-                "roave/backward-compatibility-check": "^5.0",
-                "roave/infection-static-analysis-plugin": "^1.1",
-                "squizlabs/php_codesniffer": "^3.4.2",
-                "thecodingmachine/safe": "^1.0",
-                "vimeo/psalm": "^3.14.1",
-                "wyrihaximus/coding-standard": "^2.0.1",
-                "wyrihaximus/phpstan-rules-wrapper": "^1.2"
->>>>>>> 258f271 (Add support to php 8.0)
-            },
-            "conflict": {
-                "nikic/php-parser": ">=4.10"
             },
             "type": "library",
             "extra": {
@@ -9412,11 +9060,7 @@
             "description": "🛠️ Test utilities for api-clients packages",
             "support": {
                 "issues": "https://github.com/WyriHaximus/php-test-utilities/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/WyriHaximus/php-test-utilities/tree/3.3.1"
-=======
-                "source": "https://github.com/WyriHaximus/php-test-utilities/tree/2.9.0"
->>>>>>> 258f271 (Add support to php 8.0)
             },
             "funding": [
                 {
@@ -9424,11 +9068,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
             "time": "2020-11-25T02:21:19+00:00"
-=======
-            "time": "2020-10-20T00:01:40+00:00"
->>>>>>> 258f271 (Add support to php 8.0)
         }
     ],
     "aliases": [],
