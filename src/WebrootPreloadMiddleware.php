@@ -76,6 +76,9 @@ final class WebrootPreloadMiddleware
                 $item['mime'] = $mime;
             }
 
+            /**
+             * @psalm-suppress TooManyTemplateParams
+             */
             $this->cache->set($filePath, $item);
             $count++;
             if ($logger instanceof NullLogger) {
@@ -101,6 +104,7 @@ final class WebrootPreloadMiddleware
         /**
          * @psalm-suppress MissingClosureReturnType
          * @psalm-suppress MissingClosureParamType
+         * @psalm-suppress TooManyTemplateParams
          */
         return $this->cache->get($path)->then(static function ($item) use ($next, $request) {
             if ($item === null) {
