@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3030d9e3287cf4d6970f163a72229a0",
+    "content-hash": "0cf650c39ff3194a29795a0bab50b3aa",
     "packages": [
         {
             "name": "ancarda/psr7-string-stream",
@@ -1032,25 +1032,25 @@
         },
         {
             "name": "scriptfusion/byte-formatter",
-            "version": "3.3.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ScriptFUSION/ByteFormatter.git",
-                "reference": "e984c4a8441b9300057353ad956418dc62e9b02a"
+                "reference": "b99205de7ac2953ae4e4780b79bbc21bf4b1d0dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ScriptFUSION/ByteFormatter/zipball/e984c4a8441b9300057353ad956418dc62e9b02a",
-                "reference": "e984c4a8441b9300057353ad956418dc62e9b02a",
+                "url": "https://api.github.com/repos/ScriptFUSION/ByteFormatter/zipball/b99205de7ac2953ae4e4780b79bbc21bf4b1d0dc",
+                "reference": "b99205de7ac2953ae4e4780b79bbc21bf4b1d0dc",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5|^7",
+                "php": "^7.3|^8",
                 "scriptfusion/static-class": "^1"
             },
             "require-dev": {
-                "mockery/mockery": "^1.3",
-                "phpunit/phpunit": "^4.8"
+                "mockery/mockery": "^1.4",
+                "phpunit/phpunit": "^9"
             },
             "type": "library",
             "autoload": {
@@ -1071,9 +1071,9 @@
             "description": "Formats byte values as human-readable strings.",
             "support": {
                 "issues": "https://github.com/ScriptFUSION/ByteFormatter/issues",
-                "source": "https://github.com/ScriptFUSION/ByteFormatter/tree/3.3.0"
+                "source": "https://github.com/ScriptFUSION/ByteFormatter/tree/4.0.0"
             },
-            "time": "2020-10-17T16:07:54+00:00"
+            "time": "2021-03-09T16:10:57+00:00"
         },
         {
             "name": "scriptfusion/static-class",
