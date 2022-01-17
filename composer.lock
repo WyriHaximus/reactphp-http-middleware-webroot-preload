@@ -4,15 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6bcb33532b2b1b6834bf1f53ace7c7e4",
+    "content-hash": "a3d5d7bf9485730429eca75564807f40",
     "packages": [
         {
             "name": "ancarda/psr7-string-stream",
             "version": "1.3",
             "source": {
                 "type": "git",
-                "url": "https://git.sr.ht/~ancarda/psr7-string-stream",
+                "url": "https://github.com/ancarda/psr7-string-stream.git",
                 "reference": "613485cfa5ed04fe26f6b60807209e098a97ca87"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ancarda/psr7-string-stream/zipball/613485cfa5ed04fe26f6b60807209e098a97ca87",
+                "reference": "613485cfa5ed04fe26f6b60807209e098a97ca87",
+                "shasum": ""
             },
             "require": {
                 "php": ">=7.1",
@@ -38,6 +44,9 @@
                 "MIT"
             ],
             "description": "Minimal string based PSR-7 StreamInterface implementation",
+            "support": {
+                "source": "https://github.com/ancarda/psr7-string-stream/tree/1.3"
+            },
             "time": "2019-08-31T19:30:45+00:00"
         },
         {
@@ -88,37 +97,33 @@
             "time": "2017-07-23T21:35:13+00:00"
         },
         {
-            "name": "narrowspark/mimetypes",
-            "version": "1.6.0",
+            "name": "league/mime-type-detection",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/narrowspark/mimetypes.git",
-                "reference": "990cced3a92d4ffd348838338da44d547ee0c0fd"
+                "url": "https://github.com/thephpleague/mime-type-detection.git",
+                "reference": "aa70e813a6ad3d1558fc927863d47309b4c23e69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/narrowspark/mimetypes/zipball/990cced3a92d4ffd348838338da44d547ee0c0fd",
-                "reference": "990cced3a92d4ffd348838338da44d547ee0c0fd",
+                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/aa70e813a6ad3d1558fc927863d47309b4c23e69",
+                "reference": "aa70e813a6ad3d1558fc927863d47309b4c23e69",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2"
+                "ext-fileinfo": "*",
+                "php": "^7.2 || ^8.0"
             },
             "require-dev": {
-                "ext-fileinfo": "*",
-                "ext-json": "*",
-                "mindscreen/yarnlock": "^1.0.1",
-                "narrowspark/coding-standard": "^3.0.0",
-                "phpunit/phpunit": "^8.3.4"
+                "friendsofphp/php-cs-fixer": "^3.2",
+                "phpstan/phpstan": "^0.12.68",
+                "phpunit/phpunit": "^8.5.8 || ^9.3"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Narrowspark\\MimeType\\": "src/"
-                },
-                "exclude-from-classmap": [
-                    "tests/"
-                ]
+                    "League\\MimeTypeDetection\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -126,24 +131,26 @@
             ],
             "authors": [
                 {
-                    "name": "Daniel Bannert",
-                    "email": "d.bannert@anolilab.de",
-                    "homepage": "http://www.anolilab.de",
-                    "role": "Developer"
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
                 }
             ],
-            "description": "PHP MIME Types Guesser and extension mapping.",
-            "keywords": [
-                "guesser",
-                "mimetype",
-                "mimetypes",
-                "narrowspark"
-            ],
+            "description": "Mime-type detection for Flysystem",
             "support": {
-                "issues": "https://github.com/narrowspark/mimetypes/issues",
-                "source": "https://github.com/narrowspark/mimetypes"
+                "issues": "https://github.com/thephpleague/mime-type-detection/issues",
+                "source": "https://github.com/thephpleague/mime-type-detection/tree/1.9.0"
             },
-            "time": "2020-01-06T20:43:25+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league/flysystem",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-11-21T11:48:40+00:00"
         },
         {
             "name": "psr/http-message",
@@ -3696,9 +3703,6 @@
             },
             "require": {
                 "php": "^7.1 || ^8.0"
-            },
-            "replace": {
-                "myclabs/deep-copy": "self.version"
             },
             "require-dev": {
                 "doctrine/collections": "^1.0",
@@ -8877,6 +8881,7 @@
                 "issues": "https://github.com/webmozart/path-util/issues",
                 "source": "https://github.com/webmozart/path-util/tree/2.3.0"
             },
+            "abandoned": "symfony/filesystem",
             "time": "2015-12-17T08:42:14+00:00"
         },
         {
@@ -9122,5 +9127,5 @@
     "platform-overrides": {
         "php": "7.4.7"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.2.0"
 }

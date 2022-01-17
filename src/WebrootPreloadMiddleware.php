@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace WyriHaximus\React\Http\Middleware;
 
 use Ancarda\Psr7\StringStream\ReadOnlyStringStream;
-use Narrowspark\MimeType\MimeTypeExtensionGuesser;
+use League\MimeTypeDetection\ExtensionMimeTypeDetector;
+use League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap;
+use League\MimeTypeDetection\OverridingExtensionToMimeTypeMap;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -46,12 +48,13 @@ final class WebrootPreloadMiddleware
     {
         $this->cache = $cache;
 
-        $totalSize     = ZERO;
-        $count         = ZERO;
-        $byteFormatter = (new ByteFormatter())->setPrecision(TWO)->setFormat('%v%u');
-        $directory     = new RecursiveDirectoryIterator($webroot);
-        $directory     = new RecursiveIteratorIterator($directory);
-        $directory     = iterator_to_array($directory);
+        $mimeTypeDetector = new ExtensionMimeTypeDetector(new OverridingExtensionToMimeTypeMap(new GeneratedExtensionToMimeTypeMap(), ['ico' => 'image/vnd.microsoft.icon']));
+        $totalSize        = ZERO;
+        $count            = ZERO;
+        $byteFormatter    = (new ByteFormatter())->setPrecision(TWO)->setFormat('%v%u');
+        $directory        = new RecursiveDirectoryIterator($webroot);
+        $directory        = new RecursiveIteratorIterator($directory);
+        $directory        = iterator_to_array($directory);
         usort($directory, static fn (SplFileInfo $a, SplFileInfo $b): int => $a->getPathname() <=> $b->getPathname());
         foreach ($directory as $fileinfo) {
             if (! $fileinfo->isFile()) {
@@ -65,10 +68,7 @@ final class WebrootPreloadMiddleware
             ];
             $item['etag'] = md5($item['contents']) . '-' . filesize($fileinfo->getPathname());
 
-            $mime = MimeTypeExtensionGuesser::guess($fileinfo->getExtension());
-            if ($mime === null) {
-                $mime = 'application/octet-stream';
-            }
+            $mime = $mimeTypeDetector->detectMimeTypeFromFile($fileinfo->getPathname()) ?? 'application/octet-stream';
 
             $item['mime'] = 'application/octet-stream';
             [$mime]       = explode(';', $mime);
