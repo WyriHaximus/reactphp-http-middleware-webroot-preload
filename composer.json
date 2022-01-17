@@ -23,7 +23,17 @@
     },
     "require-dev": {
         "brunty/cigar": "^1.12",
-        "wyrihaximus/async-test-utilities": "^3.3"
+        "wyrihaximus/async-test-utilities": "^4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "WyriHaximus\\React\\Http\\Middleware\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WyriHaximus\\React\\Tests\\Http\\Middleware\\": "tests/"
+        }
     },
     "config": {
         "allow-plugins": {
@@ -37,16 +47,6 @@
             "php": "7.4.7"
         },
         "sort-packages": true
-    },
-    "autoload": {
-        "psr-4": {
-            "WyriHaximus\\React\\Http\\Middleware\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "WyriHaximus\\React\\Tests\\Http\\Middleware\\": "tests/"
-        }
     },
     "scripts": {
         "post-install-cmd": [
