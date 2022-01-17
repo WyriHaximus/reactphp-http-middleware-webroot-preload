@@ -11,7 +11,7 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ancarda/psr7-string-stream": "^1.3",
-        "narrowspark/mimetypes": "^1.6",
+        "league/mime-type-detection": "^1.9",
         "psr/http-message": "^1",
         "psr/log": "^1.1",
         "react/cache": "^1",
@@ -26,6 +26,13 @@
         "wyrihaximus/async-test-utilities": "^3.3"
     },
     "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true,
+            "icanhazstring/composer-unused": true,
+            "infection/extension-installer": true
+        },
         "platform": {
             "php": "7.4.7"
         },
