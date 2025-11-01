@@ -8,6 +8,7 @@ use Ancarda\Psr7\StringStream\ReadOnlyStringStream;
 use League\MimeTypeDetection\ExtensionMimeTypeDetector;
 use League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap;
 use League\MimeTypeDetection\OverridingExtensionToMimeTypeMap;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -21,37 +22,27 @@ use SplFileInfo;
 
 use function current;
 use function explode;
+use function file_get_contents;
+use function filesize;
 use function is_string;
 use function iterator_to_array;
 use function md5;
-use function Safe\file_get_contents;
-use function Safe\filesize;
-use function Safe\usort;
+use function str_contains;
 use function str_replace;
 use function strlen;
-use function strpos;
 use function trim;
+use function usort;
 
 use const DIRECTORY_SEPARATOR;
-use const WyriHaximus\Constants\Boolean\FALSE_;
-use const WyriHaximus\Constants\HTTPStatusCodes\NOT_MODIFIED;
-use const WyriHaximus\Constants\HTTPStatusCodes\OK;
-use const WyriHaximus\Constants\HTTPStatusCodes\PRECONDITION_FAILED;
-use const WyriHaximus\Constants\Numeric\TWO;
-use const WyriHaximus\Constants\Numeric\ZERO;
 
-final class WebrootPreloadMiddleware
+final readonly class WebrootPreloadMiddleware
 {
-    private CacheInterface $cache;
-
-    public function __construct(string $webroot, LoggerInterface $logger, CacheInterface $cache)
+    public function __construct(string $webroot, LoggerInterface $logger, private CacheInterface $cache)
     {
-        $this->cache = $cache;
-
         $mimeTypeDetector = new ExtensionMimeTypeDetector(new OverridingExtensionToMimeTypeMap(new GeneratedExtensionToMimeTypeMap(), ['ico' => 'image/vnd.microsoft.icon']));
-        $totalSize        = ZERO;
-        $count            = ZERO;
-        $byteFormatter    = (new ByteFormatter())->setPrecision(TWO)->setFormat('%v%u');
+        $totalSize        = 0;
+        $count            = 0;
+        $byteFormatter    = new ByteFormatter()->setPrecision(2)->setFormat('%v%u');
         $directory        = new RecursiveDirectoryIterator($webroot);
         $directory        = new RecursiveIteratorIterator($directory);
         $directory        = iterator_to_array($directory);
@@ -72,13 +63,11 @@ final class WebrootPreloadMiddleware
 
             $item['mime'] = 'application/octet-stream';
             [$mime]       = explode(';', $mime);
-            if (strpos($mime, '/') !== FALSE_) {
+            if (str_contains($mime, '/')) {
                 $item['mime'] = $mime;
             }
 
-            /**
-             * @psalm-suppress TooManyTemplateParams
-             */
+            /** @psalm-suppress TooManyTemplateParams */
             $this->cache->set($filePath, $item);
             $count++;
             if ($logger instanceof NullLogger) {
@@ -97,6 +86,7 @@ final class WebrootPreloadMiddleware
         $logger->info('Preloaded ' . $count . ' file(s) with a combined size of ' . $byteFormatter->format($totalSize) . ' from "' . $webroot . '" into memory');
     }
 
+    /** @return PromiseInterface<ResponseInterface> */
     public function __invoke(ServerRequestInterface $request, callable $next): PromiseInterface
     {
         $path = $request->getUri()->getPath();
@@ -106,7 +96,7 @@ final class WebrootPreloadMiddleware
          * @psalm-suppress MissingClosureParamType
          * @psalm-suppress TooManyTemplateParams
          */
-        return $this->cache->get($path)->then(static function ($item) use ($next, $request) {
+        return $this->cache->get($path)->then(static function (array $item) use ($next, $request) {
             if ($item === null) {
                 return $next($request);
             }
@@ -116,7 +106,7 @@ final class WebrootPreloadMiddleware
                 if (is_string($etag)) {
                     $etag = trim($etag, '"');
                     if ($etag === $item['etag']) {
-                        return new Response(NOT_MODIFIED);
+                        return new Response(Response::STATUS_NOT_MODIFIED);
                     }
                 }
             }
@@ -126,16 +116,19 @@ final class WebrootPreloadMiddleware
                 if (is_string($expectedEtag)) {
                     $expectedEtag = trim($expectedEtag, '"');
                     if ($expectedEtag !== $item['etag']) {
-                        return new Response(PRECONDITION_FAILED);
+                        return new Response(Response::STATUS_PRECONDITION_FAILED);
                     }
                 }
             }
 
-            $response = (new Response(OK))->
-                withBody(new ReadOnlyStringStream($item['contents']))->
-                withHeader('ETag', '"' . $item['etag'] . '"');
-
-            return $response->withHeader('Content-Type', $item['mime']);
+            return new Response(
+                Response::STATUS_OK,
+                [
+                    'Content-Type' => $item['mime'],
+                    'ETag' => '"' . $item['etag'] . '"',
+                ],
+                new ReadOnlyStringStream($item['contents']),
+            );
         });
     }
 }
