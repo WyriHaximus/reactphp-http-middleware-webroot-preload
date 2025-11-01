@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WyriHaximus\React\Tests\Http\Middleware;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\AbstractLogger;
 use Psr\Log\NullLogger;
@@ -13,34 +14,31 @@ use React\Http\Message\ServerRequest;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 use WyriHaximus\React\Http\Middleware\WebrootPreloadMiddleware;
 
-use function assert;
 use function md5;
+use function React\Async\await;
 use function React\Promise\resolve;
 use function Safe\file_get_contents;
 use function Safe\filesize;
 
 use const DIRECTORY_SEPARATOR;
 
-/**
- * @internal
- */
 final class WebrootPreloadMiddlewareTest extends AsyncTestCase
 {
     public function testLogger(): void
     {
         $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
         $logger  = new class () extends AbstractLogger {
-            /** @var array<array<string, string|int>> */
+            /** @var array<array<string, mixed>> */
             private array $messages = [];
 
             // phpcs:disable
 
             /**
              * @param mixed $level
-             * @param string $message
              * @param array<mixed, mixed> $context
+             * @phpstan-ignore typeCoverage.paramTypeCoverage,throws.unusedType
              */
-            public function log($level, $message, array $context = []): void
+            public function log($level, string|\Stringable $message, array $context = []): void
             {
                 $this->messages[] = [
                     'level' => $level,
@@ -49,7 +47,7 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
             }
             // phpcs:enable
 
-            /** @return array<array<string, string|int>> */
+            /** @return array<array<string, mixed>> */
             public function getMessages(): array
             {
                 return $this->messages;
@@ -111,18 +109,15 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
         $request    = new ServerRequest('GET', 'https://example.com/');
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR, new NullLogger(), new ArrayCache());
         $next       = static fn (): ResponseInterface => new Response(200);
-        $response   = $this->await(resolve($middleware($request, $next)));
-        assert($response instanceof ResponseInterface);
+        $response   = await(resolve($middleware($request, $next)));
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([], $response->getHeaders());
         self::assertSame('', (string) $response->getBody());
     }
 
-    /**
-     * @return iterable<array<string>>
-     */
-    public function provideHits(): iterable
+    /** @return iterable<array<string>> */
+    public static function provideHits(): iterable
     {
         $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
 
@@ -175,16 +170,13 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideHits
-     */
+    #[DataProvider('provideHits')]
     public function testHit(string $file, string $contentType, string $etag): void
     {
         $request    = new ServerRequest('GET', 'https://example.com/' . $file);
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR, new NullLogger(), new ArrayCache());
         $next       = static fn (): ResponseInterface => new Response(200);
-        $response   = $this->await(resolve($middleware($request, $next)));
-        assert($response instanceof ResponseInterface);
+        $response   = await(resolve($middleware($request, $next)));
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([
@@ -196,10 +188,8 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
         self::assertSame(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR . $file), (string) $response->getBody());
     }
 
-    /**
-     * @return iterable<array<string|int>>
-     */
-    public function provideEtagIfNoneMatch(): iterable
+    /** @return iterable<array<string|int>> */
+    public static function provideEtagIfNoneMatch(): iterable
     {
         $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
 
@@ -219,10 +209,8 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
         ];
     }
 
-    /**
-     * @return iterable<array<string|int>>
-     */
-    public function provideEtagIfMatchOK(): iterable
+    /** @return iterable<array<string|int>> */
+    public static function provideEtagIfMatchOK(): iterable
     {
         $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
 
@@ -237,10 +225,8 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
         ];
     }
 
-    /**
-     * @return iterable<array<string|int>>
-     */
-    public function provideEtagIfMatchPreconditionFails(): iterable
+    /** @return iterable<array<string|int>> */
+    public static function provideEtagIfMatchPreconditionFails(): iterable
     {
         yield [
             '"' . md5('FailMe') . '"',
@@ -253,53 +239,46 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideEtagIfNoneMatch
-     */
+    #[DataProvider('provideEtagIfNoneMatch')]
     public function testEtagIfNoneMatch(string $etag, int $statusCode): void
     {
         $request    = new ServerRequest(
             'GET',
             'https://example.com/mind-blown.gif',
-            ['If-None-Match' => $etag]
+            ['If-None-Match' => $etag],
         );
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR, new NullLogger(), new ArrayCache());
         $next       = static fn (): ResponseInterface => new Response(200);
-        $response   = $this->await(resolve($middleware($request, $next)));
-        assert($response instanceof ResponseInterface);
+        $response   = await(resolve($middleware($request, $next)));
 
         self::assertSame($statusCode, $response->getStatusCode());
     }
 
-    /**
-     * @dataProvider provideEtagIfMatchOK
-     */
+    #[DataProvider('provideEtagIfMatchOK')]
     public function testEtagIfMatchOK(string $etag, int $statusCode): void
     {
         $request    = new ServerRequest(
             'DELETE',
             'https://example.com/mind-blown.gif',
-            ['If-Match' => $etag]
+            ['If-Match' => $etag],
         );
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR, new NullLogger(), new ArrayCache());
         $next       = static fn (): ResponseInterface => new Response(200);
-        $response   = $this->await(resolve($middleware($request, $next)));
+        $response   = await(resolve($middleware($request, $next)));
         self::assertSame($statusCode, $response->getStatusCode());
     }
 
-    /**
-     * @dataProvider provideEtagIfMatchPreconditionFails
-     */
+    #[DataProvider('provideEtagIfMatchPreconditionFails')]
     public function testEtagIfMatchPreconditionFails(string $etag, int $statusCode): void
     {
         $request    = new ServerRequest(
             'DELETE',
             'https://example.com/mind-blown.gif',
-            ['If-Match' => $etag]
+            ['If-Match' => $etag],
         );
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR, new NullLogger(), new ArrayCache());
         $next       = static fn (): ResponseInterface => new Response(200);
-        $response   = $this->await(resolve($middleware($request, $next)));
+        $response   = await(resolve($middleware($request, $next)));
         self::assertSame($statusCode, $response->getStatusCode());
     }
 }

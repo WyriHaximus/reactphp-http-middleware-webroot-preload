@@ -23,7 +23,7 @@ $http   = new HttpServer(
     new WebrootPreloadMiddleware(
         dirname(__DIR__) . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR,
         new NullLogger(),
-        new ArrayCache()
+        new ArrayCache(),
     ),
     static fn (ServerRequestInterface $request): ResponseInterface => new Response(PROCESSING),
 );
