@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - id: generate-versions-strategy
-        uses: WyriHaximus/github-action-composer-php-versions-in-range@v1
+        uses: WyriHaximus/github-action-composer-php-versions-in-range@d037519ac6672bf126b1335dcff5f1fd0062658e # v1.15.0
   generate-checks-strategy:
     name: Generate Checks
     runs-on: ubuntu-latest
