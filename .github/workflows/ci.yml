@@ -9,7 +9,7 @@ jobs:
     outputs:
       version: ${{ steps.generate-versions-strategy.outputs.version }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - id: generate-versions-strategy
         uses: WyriHaximus/github-action-composer-php-versions-in-range@v1
   generate-checks-strategy:
@@ -18,7 +18,7 @@ jobs:
     outputs:
       check: ${{ steps.generate-checks-strategy.outputs.check }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - id: generate-checks-strategy
         name: Generate check
         run: |
@@ -42,7 +42,7 @@ jobs:
     container:
       image: ghcr.io/wyrihaximusnet/php:${{ matrix.php }}-nts-buster-dev-root
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - name: Cache composer packages
         uses: actions/cache@v1
         with:
@@ -72,7 +72,7 @@ jobs:
     container:
       image: ghcr.io/wyrihaximusnet/php:${{ matrix.php }}-nts-buster-dev-root
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - name: Cache composer packages
         uses: actions/cache@v1
         with:
