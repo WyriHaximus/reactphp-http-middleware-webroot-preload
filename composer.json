@@ -23,7 +23,7 @@
     },
     "require-dev": {
         "brunty/cigar": "^1.12",
-        "wyrihaximus/async-test-utilities": "^4.2"
+        "wyrihaximus/async-test-utilities": "^10.6.0"
     },
     "autoload": {
         "psr-4": {
