@@ -44,7 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Cache composer packages
-        uses: actions/cache@v1
+        uses: actions/cache@a7833574556fa59680c1b7cb190c1735db73ebf0 # v5.0.0
         with:
           path: ./vendor/
           key: ${{ matrix.composer }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
@@ -74,7 +74,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Cache composer packages
-        uses: actions/cache@v1
+        uses: actions/cache@a7833574556fa59680c1b7cb190c1735db73ebf0 # v5.0.0
         with:
           path: ./vendor/
           key: ${{ matrix.composer }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
