@@ -32,11 +32,16 @@ $server = new Server([
 ]);
 ```
 
+## Out of process caching
+
+Internally this package uses a readonly DTO to store the preloaded files in cache. This means that if you want to store
+it in say Redis, you will have to serialize the DTO yourself using a decorator around the Redis cache.
+
 # License
 
 The MIT License (MIT)
 
-Copyright (c) 2017 Cees-Jan Kiewiet
+Copyright (c) 2026 Cees-Jan Kiewiet
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
