@@ -1,59 +1,62 @@
 {
-    "name": "wyrihaximus/react-http-middleware-webroot-preload",
-    "description": "react/http middleware static webroot serving",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Cees-Jan Kiewiet",
-            "email": "ceesjank@gmail.com"
-        }
-    ],
-    "require": {
-        "php": "^7.4 || ^8.0",
-        "ancarda/psr7-string-stream": "^1.3",
-        "league/mime-type-detection": "^1.9",
-        "psr/http-message": "^1",
-        "psr/log": "^3 || ^2 || ^1.1",
-        "react/cache": "^1",
-        "react/http": "^1",
-        "react/promise": "^2.8",
-        "scriptfusion/byte-formatter": "^3.2 || ^4.0",
-        "thecodingmachine/safe": "^2 || ^1.3",
-        "wyrihaximus/constants": "^1.5"
-    },
-    "require-dev": {
-        "brunty/cigar": "^1.12",
-        "wyrihaximus/async-test-utilities": "^4.2"
-    },
-    "autoload": {
-        "psr-4": {
-            "WyriHaximus\\React\\Http\\Middleware\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "WyriHaximus\\React\\Tests\\Http\\Middleware\\": "tests/"
-        }
-    },
-    "config": {
-        "allow-plugins": {
-            "composer/package-versions-deprecated": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "ergebnis/composer-normalize": true,
-            "icanhazstring/composer-unused": true,
-            "infection/extension-installer": true
-        },
-        "platform": {
-            "php": "7.4.7"
-        },
-        "sort-packages": true
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "composer normalize"
-        ],
-        "post-update-cmd": [
-            "composer normalize"
-        ]
+  "name": "wyrihaximus/react-http-middleware-webroot-preload",
+  "description": "react/http middleware static webroot serving",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Cees-Jan Kiewiet",
+      "email": "ceesjank@gmail.com"
     }
+  ],
+  "require": {
+    "php": "^8.4",
+    "ancarda/psr7-string-stream": "1.3.1",
+    "league/mime-type-detection": "^1.16.0",
+    "psr/http-message": "^1.1.0",
+    "psr/log": "^1.1 || ^2 || ^3",
+    "react/cache": "^1.2.0",
+    "react/http": "^1.11.0",
+    "react/promise": "^2.8 || ^3.3.0",
+    "scriptfusion/byte-formatter": "^4.2.0"
+  },
+  "require-dev": {
+    "brunty/cigar": "^1.12.4",
+    "colinodell/psr-testlogger": "^1.3.1",
+    "wyrihaximus/async-test-utilities": "^10.5.0",
+    "wyrihaximus/makefiles": "^0.7.11"
+  },
+  "autoload": {
+    "psr-4": {
+      "WyriHaximus\\React\\Http\\Middleware\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "WyriHaximus\\React\\Tests\\Http\\Middleware\\": "tests/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "ergebnis/composer-normalize": true,
+      "icanhazstring/composer-unused": true,
+      "infection/extension-installer": true,
+      "phpstan/extension-installer": true,
+      "wyrihaximus/makefiles": true,
+      "wyrihaximus/test-utilities": true
+    },
+    "platform": {
+      "php": "8.4.13"
+    },
+    "sort-packages": true
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "make on-install-or-update || true"
+    ],
+    "post-update-cmd": [
+      "make on-install-or-update || true"
+    ]
+  }
 }

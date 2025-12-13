@@ -1,0 +1,25 @@
+parameters:
+	level: max
+	paths:
+		- ../../etc
+		- ../../src
+		- ../../tests
+	ergebnis:
+		noExtends:
+			classesAllowedToBeExtended:
+			- Psr\Log\AbstractLogger
+			- WyriHaximus\AsyncTestUtilities\AsyncTestCase
+	ignoreErrors:
+		-
+			identifier: shipmonk.checkedExceptionInCallable
+			path: ../../src/WebrootPreloadMiddleware.php
+			count: 3
+
+		-
+			identifier: shipmonk.checkedExceptionInYieldingMethod
+			path: ../../tests/WebrootPreloadMiddlewareTest.php
+			count: 12
+		-
+			identifier: shipmonk.checkedExceptionInCallable
+			path: ../../tests/WebrootPreloadMiddlewareTest.php
+			count: 5

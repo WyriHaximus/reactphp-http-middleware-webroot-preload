@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace WyriHaximus\React\Tests\Http\Middleware;
 
+use ColinODell\PsrTestLogger\TestLogger;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Log\AbstractLogger;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\NullLogger;
 use React\Cache\ArrayCache;
 use React\Http\Message\Response;
@@ -13,116 +16,146 @@ use React\Http\Message\ServerRequest;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 use WyriHaximus\React\Http\Middleware\WebrootPreloadMiddleware;
 
-use function assert;
 use function md5;
+use function React\Async\await;
 use function React\Promise\resolve;
 use function Safe\file_get_contents;
 use function Safe\filesize;
 
 use const DIRECTORY_SEPARATOR;
 
-/**
- * @internal
- */
 final class WebrootPreloadMiddlewareTest extends AsyncTestCase
 {
-    public function testLogger(): void
+    #[Test]
+    public function logger(): void
     {
         $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
-        $logger  = new class () extends AbstractLogger {
-            /** @var array<array<string, string|int>> */
-            private array $messages = [];
-
-            // phpcs:disable
-
-            /**
-             * @param mixed $level
-             * @param string $message
-             * @param array<mixed, mixed> $context
-             */
-            public function log($level, $message, array $context = []): void
-            {
-                $this->messages[] = [
-                    'level' => $level,
-                    'message' => $message,
-                ];
-            }
-            // phpcs:enable
-
-            /** @return array<array<string, string|int>> */
-            public function getMessages(): array
-            {
-                return $this->messages;
-            }
-        };
-
+        $logger  = new TestLogger();
         new WebrootPreloadMiddleware($webroot, $logger, new ArrayCache());
 
-        self::assertSame([
+        foreach (
             [
-                'level' => 'debug',
-                'message' => '/android.jpg: 15.61KiB (image/jpeg)',
-            ],
-            [
-                'level' => 'debug',
-                'message' => '/app.css: 18B (text/css)',
-            ],
-            [
-                'level' => 'debug',
-                'message' => '/app.js: 27B (application/javascript)',
-            ],
-            [
-                'level' => 'debug',
-                'message' => '/favicon.ico: 5.3KiB (image/vnd.microsoft.icon)',
-            ],
-            [
-                'level' => 'debug',
-                'message' => '/google.png: 594B (image/png)',
-            ],
-            [
-                'level' => 'debug',
-                'message' => '/index.html: 453B (text/html)',
-            ],
-            [
-                'level' => 'debug',
-                'message' => '/mind-blown.gif: 4.37MiB (image/gif)',
-            ],
-            [
-                'level' => 'debug',
-                'message' => '/mind-blown.webp: 2.28MiB (image/webp)',
-            ],
-            [
-                'level' => 'debug',
-                'message' => '/robots.txt: 68B (text/plain)',
-            ],
-            [
-                'level' => 'debug',
-                'message' => '/unknown.unknown_extension: 73B (application/octet-stream)',
-            ],
-            [
-                'level' => 'info',
-                'message' => 'Preloaded 10 file(s) with a combined size of 6.67MiB from "' . $webroot . '" into memory',
-            ],
-        ], $logger->getMessages());
+                [
+                    'level' => 'debug',
+                    'message' => '{filePath}: {fileSize} ({mimeType})',
+                    'context' => [
+                        'filePath' => '/android.jpg',
+                        'fileSize' => '15.61KiB',
+                        'mimeType' => 'image/jpeg',
+                    ],
+                ],
+                [
+                    'level' => 'debug',
+                    'message' => '{filePath}: {fileSize} ({mimeType})',
+                    'context' => [
+                        'filePath' => '/app.css',
+                        'fileSize' => '18B',
+                        'mimeType' => 'text/css',
+                    ],
+                ],
+                [
+                    'level' => 'debug',
+                    'message' => '{filePath}: {fileSize} ({mimeType})',
+                    'context' => [
+                        'filePath' => '/app.js',
+                        'fileSize' => '27B',
+                        'mimeType' => 'application/javascript',
+                    ],
+                ],
+                [
+                    'level' => 'debug',
+                    'message' => '{filePath}: {fileSize} ({mimeType})',
+                    'context' => [
+                        'filePath' => '/favicon.ico',
+                        'fileSize' => '5.3KiB',
+                        'mimeType' => 'image/vnd.microsoft.icon',
+                    ],
+                ],
+                [
+                    'level' => 'debug',
+                    'message' => '{filePath}: {fileSize} ({mimeType})',
+                    'context' => [
+                        'filePath' => '/google.png',
+                        'fileSize' => '594B',
+                        'mimeType' => 'image/png',
+                    ],
+                ],
+                [
+                    'level' => 'debug',
+                    'message' => '{filePath}: {fileSize} ({mimeType})',
+                    'context' => [
+                        'filePath' => '/index.html',
+                        'fileSize' => '453B',
+                        'mimeType' => 'text/html',
+                    ],
+                ],
+                [
+                    'level' => 'debug',
+                    'message' => '{filePath}: {fileSize} ({mimeType})',
+                    'context' => [
+                        'filePath' => '/mind-blown.gif',
+                        'fileSize' => '4.37MiB',
+                        'mimeType' => 'image/gif',
+                    ],
+                ],
+                [
+                    'level' => 'debug',
+                    'message' => '{filePath}: {fileSize} ({mimeType})',
+                    'context' => [
+                        'filePath' => '/mind-blown.webp',
+                        'fileSize' => '2.28MiB',
+                        'mimeType' => 'image/webp',
+                    ],
+                ],
+                [
+                    'level' => 'debug',
+                    'message' => '{filePath}: {fileSize} ({mimeType})',
+                    'context' => [
+                        'filePath' => '/robots.txt',
+                        'fileSize' => '68B',
+                        'mimeType' => 'text/plain',
+                    ],
+                ],
+                [
+                    'level' => 'debug',
+                    'message' => '{filePath}: {fileSize} ({mimeType})',
+                    'context' => [
+                        'filePath' => '/unknown.unknown_extension',
+                        'fileSize' => '73B',
+                        'mimeType' => 'application/octet-stream',
+                    ],
+                ],
+                [
+                    'level' => 'info',
+                    'message' => 'Preloaded {count} file(s) with a combined size of {totalSize} from "{webroot}" into memory',
+                    'context' => [
+                        'count' => 10,
+                        'totalSize' => '6.67MiB',
+                        'webroot' => $webroot,
+                    ],
+                ],
+            ] as $item
+        ) {
+            self::assertTrue($logger->hasRecord($item), $item['level'] . ': ' . $item['message']);
+        }
     }
 
-    public function testMiss(): void
+    #[Test]
+    public function miss(): void
     {
         $request    = new ServerRequest('GET', 'https://example.com/');
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR, new NullLogger(), new ArrayCache());
-        $next       = static fn (): ResponseInterface => new Response(200);
-        $response   = $this->await(resolve($middleware($request, $next)));
-        assert($response instanceof ResponseInterface);
+        /** @phpstan-ignore shipmonk.unusedParameter */
+        $next     = static fn (ServerRequestInterface $request): ResponseInterface => new Response(200);
+        $response = await(resolve($middleware($request, $next)));
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([], $response->getHeaders());
         self::assertSame('', (string) $response->getBody());
     }
 
-    /**
-     * @return iterable<array<string>>
-     */
-    public function provideHits(): iterable
+    /** @return iterable<array<string>> */
+    public static function provideHits(): iterable
     {
         $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
 
@@ -175,31 +208,28 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideHits
-     */
-    public function testHit(string $file, string $contentType, string $etag): void
+    #[DataProvider('provideHits')]
+    #[Test]
+    public function hit(string $file, string $contentType, string $etag): void
     {
         $request    = new ServerRequest('GET', 'https://example.com/' . $file);
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR, new NullLogger(), new ArrayCache());
-        $next       = static fn (): ResponseInterface => new Response(200);
-        $response   = $this->await(resolve($middleware($request, $next)));
-        assert($response instanceof ResponseInterface);
+        /** @phpstan-ignore shipmonk.unusedParameter */
+        $next     = static fn (ServerRequestInterface $request): ResponseInterface => new Response(200);
+        $response = await(resolve($middleware($request, $next)));
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([
+            'Content-Type' => [$contentType],
             'ETag' => [
                 '"' . $etag . '"',
             ],
-            'Content-Type' => [$contentType],
         ], $response->getHeaders());
         self::assertSame(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR . $file), (string) $response->getBody());
     }
 
-    /**
-     * @return iterable<array<string|int>>
-     */
-    public function provideEtagIfNoneMatch(): iterable
+    /** @return iterable<array<string|int>> */
+    public static function provideEtagIfNoneMatch(): iterable
     {
         $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
 
@@ -219,10 +249,8 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
         ];
     }
 
-    /**
-     * @return iterable<array<string|int>>
-     */
-    public function provideEtagIfMatchOK(): iterable
+    /** @return iterable<array<string|int>> */
+    public static function provideEtagIfMatchOK(): iterable
     {
         $webroot = __DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR;
 
@@ -237,10 +265,8 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
         ];
     }
 
-    /**
-     * @return iterable<array<string|int>>
-     */
-    public function provideEtagIfMatchPreconditionFails(): iterable
+    /** @return iterable<array<string|int>> */
+    public static function provideEtagIfMatchPreconditionFails(): iterable
     {
         yield [
             '"' . md5('FailMe') . '"',
@@ -253,53 +279,52 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideEtagIfNoneMatch
-     */
-    public function testEtagIfNoneMatch(string $etag, int $statusCode): void
+    #[DataProvider('provideEtagIfNoneMatch')]
+    #[Test]
+    public function etagIfNoneMatch(string $etag, int $statusCode): void
     {
         $request    = new ServerRequest(
             'GET',
             'https://example.com/mind-blown.gif',
-            ['If-None-Match' => $etag]
+            ['If-None-Match' => $etag],
         );
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR, new NullLogger(), new ArrayCache());
-        $next       = static fn (): ResponseInterface => new Response(200);
-        $response   = $this->await(resolve($middleware($request, $next)));
-        assert($response instanceof ResponseInterface);
+        /** @phpstan-ignore shipmonk.unusedParameter */
+        $next     = static fn (ServerRequestInterface $request): ResponseInterface => new Response(200);
+        $response = await(resolve($middleware($request, $next)));
 
         self::assertSame($statusCode, $response->getStatusCode());
     }
 
-    /**
-     * @dataProvider provideEtagIfMatchOK
-     */
-    public function testEtagIfMatchOK(string $etag, int $statusCode): void
+    #[DataProvider('provideEtagIfMatchOK')]
+    #[Test]
+    public function etagIfMatchOK(string $etag, int $statusCode): void
     {
         $request    = new ServerRequest(
             'DELETE',
             'https://example.com/mind-blown.gif',
-            ['If-Match' => $etag]
+            ['If-Match' => $etag],
         );
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR, new NullLogger(), new ArrayCache());
-        $next       = static fn (): ResponseInterface => new Response(200);
-        $response   = $this->await(resolve($middleware($request, $next)));
+        /** @phpstan-ignore shipmonk.unusedParameter */
+        $next     = static fn (ServerRequestInterface $request): ResponseInterface => new Response(200);
+        $response = await(resolve($middleware($request, $next)));
         self::assertSame($statusCode, $response->getStatusCode());
     }
 
-    /**
-     * @dataProvider provideEtagIfMatchPreconditionFails
-     */
-    public function testEtagIfMatchPreconditionFails(string $etag, int $statusCode): void
+    #[DataProvider('provideEtagIfMatchPreconditionFails')]
+    #[Test]
+    public function etagIfMatchPreconditionFails(string $etag, int $statusCode): void
     {
         $request    = new ServerRequest(
             'DELETE',
             'https://example.com/mind-blown.gif',
-            ['If-Match' => $etag]
+            ['If-Match' => $etag],
         );
         $middleware = new WebrootPreloadMiddleware(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR, new NullLogger(), new ArrayCache());
-        $next       = static fn (): ResponseInterface => new Response(200);
-        $response   = $this->await(resolve($middleware($request, $next)));
+        /** @phpstan-ignore shipmonk.unusedParameter */
+        $next     = static fn (ServerRequestInterface $request): ResponseInterface => new Response(200);
+        $response = await(resolve($middleware($request, $next)));
         self::assertSame($statusCode, $response->getStatusCode());
     }
 }
