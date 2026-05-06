@@ -34,6 +34,7 @@ use function usort;
 
 use const DIRECTORY_SEPARATOR;
 
+/** @api */
 final readonly class WebrootPreloadMiddleware
 {
     public function __construct(string $webroot, LoggerInterface $logger, private CacheInterface $cache)
