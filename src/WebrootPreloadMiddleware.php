@@ -78,7 +78,6 @@ final readonly class WebrootPreloadMiddleware
                 mimeType: str_contains($mime, '/') ? $mime : 'application/octet-stream',
             );
 
-            /** @psalm-suppress TooManyTemplateParams */
             $this->cache->set($filePath, $item);
             $count++;
 
