@@ -16,11 +16,11 @@ use React\Http\Message\ServerRequest;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 use WyriHaximus\React\Http\Middleware\WebrootPreloadMiddleware;
 
+use function file_get_contents;
+use function filesize;
 use function md5;
 use function React\Async\await;
 use function React\Promise\resolve;
-use function Safe\file_get_contents;
-use function Safe\filesize;
 
 use const DIRECTORY_SEPARATOR;
 
@@ -225,6 +225,7 @@ final class WebrootPreloadMiddlewareTest extends AsyncTestCase
                 '"' . $etag . '"',
             ],
         ], $response->getHeaders());
+        /** @phpstan-ignore wyrihaximus.reactphp.blocking.function.fileGetContents */
         self::assertSame(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'webroot' . DIRECTORY_SEPARATOR . $file), (string) $response->getBody());
     }
 
