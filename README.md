@@ -1,6 +1,6 @@
 # A static preloaded webroot middleware for react/http
 
-![Continuous Integration](https://github.com/WyriHaximus/react-http-middleware-webroot-preload/workflows/Continuous%20Integration/badge.svg)
+[![Continuous Integration](https://github.com/WyriHaximus/reactphp-http-middleware-webroot-preload/actions/workflows/ci.yaml/badge.svg)](https://github.com/WyriHaximus/reactphp-http-middleware-webroot-preload/actions/workflows/ci.yaml)
 [![Latest Stable Version](https://poser.pugx.org/WyriHaximus/react-http-middleware-webroot-preload/v/stable.png)](https://packagist.org/packages/WyriHaximus/react-http-middleware-webroot-preload)
 [![Total Downloads](https://poser.pugx.org/WyriHaximus/react-http-middleware-webroot-preload/downloads.png)](https://packagist.org/packages/WyriHaximus/react-http-middleware-webroot-preload)
 [![Code Coverage](https://scrutinizer-ci.com/g/WyriHaximus/reactphp-http-middleware-webroot-preload/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/WyriHaximus/reactphp-http-middleware-webroot-preload/?branch=master)
