@@ -5,8 +5,6 @@
 [![Total Downloads](https://poser.pugx.org/WyriHaximus/react-http-middleware-webroot-preload/downloads.png)](https://packagist.org/packages/WyriHaximus/react-http-middleware-webroot-preload)
 [![Code Coverage](https://scrutinizer-ci.com/g/WyriHaximus/reactphp-http-middleware-webroot-preload/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/WyriHaximus/reactphp-http-middleware-webroot-preload/?branch=master)
 [![License](https://poser.pugx.org/WyriHaximus/react-http-middleware-webroot-preload/license.png)](https://packagist.org/packages/WyriHaximus/react-http-middleware-webroot-preload)
-[![PHP 7 ready](http://php7ready.timesplinter.ch/WyriHaximus/reactphp-http-middleware-webroot-preload/badge.svg)](https://travis-ci.org/WyriHaximus/reactphp-http-middleware-webroot-preload)
-
 # Install
 
 To install via [Composer](http://getcomposer.org/), use the command below, it will automatically detect the latest version and bind it with `^`.
@@ -18,8 +16,8 @@ composer require wyrihaximus/react-http-middleware-webroot-preload
 # Usage
 
 The middleware accepts two parameters, first the webroot directory, and secondly an optional PSR-3 logger.
-It is important to note that ALL files in the webroot will be served regardless of file type. So no PHP or
-files containing passwords etc etc should be in there.
+All files in the webroot are served regardless of type. Do not store PHP files or files containing passwords or other
+sensitive information there.
 
 ```php
 $webroot = '/var/www/';

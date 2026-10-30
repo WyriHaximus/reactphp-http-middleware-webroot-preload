@@ -55,5 +55,6 @@
                 "WyriHaximus\\TestUtilities\\TestCase::getSysTempDir"
             ]
         }
-    }
+    },
+    "threads": 64
 }
