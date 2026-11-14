@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9faf4fb1e66af61b8f8210891575d0db",
+    "content-hash": "936fbc93c113eb39f335cd433c3ccf7c",
     "packages": [
         {
             "name": "ancarda/psr7-string-stream",
@@ -10460,16 +10460,16 @@
         },
         {
             "name": "wyrihaximus/makefiles",
-            "version": "0.15.5",
+            "version": "0.15.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WyriHaximus/Makefiles.git",
-                "reference": "e8ae025777e6e95b0503d8cd060787a5c123b5c0"
+                "reference": "631a4adbc7ae957868ef5d47dea90809cc8355da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WyriHaximus/Makefiles/zipball/e8ae025777e6e95b0503d8cd060787a5c123b5c0",
-                "reference": "e8ae025777e6e95b0503d8cd060787a5c123b5c0",
+                "url": "https://api.github.com/repos/WyriHaximus/Makefiles/zipball/631a4adbc7ae957868ef5d47dea90809cc8355da",
+                "reference": "631a4adbc7ae957868ef5d47dea90809cc8355da",
                 "shasum": ""
             },
             "require": {
@@ -10510,7 +10510,7 @@
             "description": "🧱 Makefile building blocks",
             "support": {
                 "issues": "https://github.com/WyriHaximus/Makefiles/issues",
-                "source": "https://github.com/WyriHaximus/Makefiles/tree/0.15.5"
+                "source": "https://github.com/WyriHaximus/Makefiles/tree/0.15.6"
             },
             "funding": [
                 {
@@ -10518,7 +10518,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-02T19:25:48+00:00"
+            "time": "2026-11-14T16:05:42+00:00",
+            "published-time": "2026-11-14T16:07:10+00:00"
         },
         {
             "name": "wyrihaximus/phpstan-no-safe",

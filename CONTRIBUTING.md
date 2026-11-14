@@ -24,7 +24,7 @@ You can list all the contrib commands with:
 
 ## Documentation QA
 
-Changes to Markdown (README, CONTRIBUTING, AGENTS, and similar) must pass documentation QA. Both `make` and `make contrib` run `documentation-qa`, which checks structure ([markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2)), links ([lychee](https://github.com/lycheeverse/lychee)), spelling ([cspell](https://cspell.org/)), and prose ([Vale](https://vale.sh/)).
+Changes to Markdown (`README.md`, `CONTRIBUTING.md`, `AGENTS.md`, and similar) must pass documentation QA. Both `make` and `make contrib` run `documentation-qa`, which checks structure ([markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2)), links ([lychee](https://github.com/lycheeverse/lychee)), spelling ([cspell](https://cspell.org/)), and prose ([Vale](https://vale.sh/)).
 
 To run only the documentation checks:
 
